@@ -28,7 +28,7 @@ Day 1 tasks:
 - [ ] Repo initialized in this folder. Dev server runs on the Mac and on the Pi.
 
 From requirements and the hand-off pack (CN-12):
-- [ ] Create the planned code layout (folders below) with a one-line README or `.gitkeep` in each, plus `.env.example` with placeholder names only
+- [x] Create the planned code layout (folders below) with a one-line README or `.gitkeep` in each, plus `.env.example` with placeholder names only
 - [ ] Confirm the stack in `AGENTS.md` (Node LTS with TypeScript, `ws`, Vite, DOM SVG) and record it in `docs/decisions.md`
 - [ ] Choose the pad service language (`mido` with `python-rtmidi`, or `easymidi`) by seeing which installs cleanly on the Pi
 - [ ] Review every `PROPOSED` item in `docs/contracts.md`; fix or approve each and update the file
