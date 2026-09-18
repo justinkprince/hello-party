@@ -1,3 +1,5 @@
+> **Version v1, frozen 2026-09-18.** Changes need Justin's approval, an entry in `decisions.md`, and a version bump here. New ideas go in `backlog.md`.
+
 # Hello Kitty Party Display: Requirements (v1 draft)
 
 Date: Fri Sep 18, 2026
