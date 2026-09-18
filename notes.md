@@ -1,0 +1,225 @@
+# Hello Kitty Party Display: Idea Notes
+
+Status: plan agreed (Fri Sep 18, 2026). Party is Sat Sep 26. Requirements are in `requirements.md` and the day-by-day plan is in `timeline.md`. Sections marked DROPPED or PARKED are kept for reference only.
+
+## Decisions and scope (current)
+
+**In scope:**
+- A Hello Kitty themed "party on the TV" in the background: simple layered SVG characters with a sense of autonomy, moving through scenes. Run-of-show: Chilling (default), Game time, Cake time, Gift time. A Dancing scene is kept as an optional extra.
+- Character Studio for guests on phones or tablets, with edit and PNG download (animated GIF is a stretch goal). Kitty-inspired original art. No selfie cutout and no photo processing.
+- Guest app with two modes. Character mode: create, edit, and remove up to 3 characters, and download. Interact mode: the same 16 buttons as the MIDI pad. Actions go through a queue with a cooldown and one pending action per character, and fair priority by character, so kids who share a phone or the tablet get the same standing as kids with their own phones. Admins can time out a device (see `requirements.md`).
+- A character strip (up to 3 names) across the top of the app lets one phone hold several people's characters, so a parent can switch between children. The active character's name shows on the TV with each action. A compact queue display on the TV shows who is waiting (nice to have).
+- MIDI pad station: 16 labeled special-action pads, wired USB. Expected delivery Sun 9/20.
+- Admin for Justin and his wife: switch scenes, trigger cues, hide names, remove characters, time out devices, turn focus mode on and off, broadcast a sound to phones, reset to safe scene.
+- Scene transitions signal real-life moments with a transition card on the TV. Cake time and Gift time are focus scenes: phones lock to a calm screen and the TV goes calm, so attention stays on the birthday girl.
+- Everything runs on the Pi over local Wi-Fi, with Wi-Fi and site QR signage. Cloudflare Tunnel is optional.
+- Game time scene: the characters play their own party games (pinata, pin the tail, musical chairs). No scoreboard or timer.
+
+**Dropped:** camera games and pose tracking (no AI HAT+), the microphone and all voice/noise reactions, selfie face cutouts.
+
+**Parked:** ESP32 wearables and props, AI voice and "Ask Kitty" features, arcade buttons and floor pads on GPIO.
+
+## Context (from Justin)
+- Hello Kitty themed birthday party for a 9-year-old, about one week out, hosted at home.
+- About 16 kids of various ages attending.
+- Living room is fairly bright with natural sunlight.
+- Room layout: TV sits on a fireplace mantle in a small recess, flanked by shelf/cabinets on both sides. Windows are on the same wall on each side of the cabinets. A third window is on an adjacent wall (blinds can be closed if needed).
+- Plan: put the Pi behind, beside, or on top of the TV.
+- Constraint: AI HAT+ is too expensive or will not arrive in time. This is now moot because the camera features were dropped.
+- Decision: no selfie face cutout. Characters are simple layered SVGs.
+- Decision: drop the camera games and the mic. TV runs in the background as a party the characters throw for themselves, reacting to phone input and the pad controller.
+- A Smart TV is in the living room. Already own a Raspberry Pi 5 plus "a bunch of components". There is time to order anything missing.
+- Original idea: TV shows Hello Kitty universe characters that react in near real time to what people do.
+- Original idea 2: a memorable domain and QR code lets guests open a controller page on their phone and make things happen on screen.
+
+## Core architecture (leaning)
+- Run everything on the Pi over the local network. Phones join party Wi-Fi and open the controller page at the Pi's static IP. No dependency on internet or Vercel for the core experience.
+- Optional: Cloudflare Tunnel later if remote access is wanted. Domain jusajuma.com is already on Cloudflare.
+- Pieces:
+  1. Server (Node or Python): WebSocket, character storage, event bus, scene director, admin.
+  2. Pad service: reads the MIDI pad controller and publishes `pad:N` events to the event bus.
+  3. Display (Chromium kiosk on the Pi HDMI output): renders characters, animations, and audio.
+- Phone controller = small web page served by the same Pi (Node or Python server).
+- Always have a fallback mode (looping slideshow or playlist) if anything breaks mid-party.
+- Two QR codes on display: one for Wi-Fi join (`WIFI:T:WPA;S:<ssid>;P:<pass>;;`), one for the controller URL.
+
+## Idea backlog
+
+### Camera-based (DROPPED; kept for reference)
+| Idea | Difficulty | Notes |
+|---|---|---|
+| Single-player pose mirror (Kitty copies one kid's moves) | Low | MediaPipe. Best "wow per hour". |
+| Multi-player pose mirror (several kids, each mapped to a character) | High | Needs multi-person pose, tracking, slot assignment. See "Multi-person" below. |
+| Full-crowd mirroring of all 16 kids | Not recommended | Occlusion, ID swaps, CPU load. |
+| Red light, green light / freeze dance | Medium | Motion detection, not pose. Same engine as freeze dance. Likely flagship camera game. |
+| Handheld "magic wand" tracked via printed fiducial marker (ArUco/AprilTag) | Low-Medium | Object = identity. Tag ID maps to a character. Good for single-player turns. |
+| Bow Catcher (catch falling bows/stars with wand or hand) | Medium | Wand tracking is more robust than hand landmarks. |
+| Photo booth (Kitty bow/whiskers overlay, slideshow, QR download) | Low-Medium | Keep local-only. Delete photos after the party (other people's kids). |
+| Blow-out-the-candles finale | Medium | USB mic detects blowing or cheering, then candles go out, fireworks, Kitty sings. |
+
+### Custom characters (Justin's idea, prompted by the missing AI HAT+)
+- Guests build a character that looks like them, and it appears on the TV in a shared party scene. No camera needed.
+- Character Studio (web page, phone or tablet): layered SVG parts (bow/hat, ears, hair, face, outfit, accessories) with color pickers, plus a name field. The same SVG parts are rendered on the TV.
+- Kids without phones: set up 2-3 tablet/laptop stations and a QR code for parents' phones. Build a Kitty-inspired original base, not official Sanrio art.
+- Looks-like-me: attribute sliders (hair, skin tone, glasses, freckles). Decision: no selfie face cutout and no photo processing.
+- On-screen behavior: characters wander/idle in a scene, phone buttons and the pad trigger emotes and dances, and everyone gathers at cake time.
+- (Dropped) Camera games would have used the character as the avatar in red light/green light.
+- Main cost is drawing the SVG parts, not the code. Keep the part list small and use color variables for variety.
+- Cap the number of characters on screen and test with about 30 animated at once. Names are checked by a filter, and an admin can hide any name with one tap.
+- Let guests download their character as a PNG (party favor).
+
+### Sound-reactive party scene (DROPPED with the mic; kept for reference)
+- Concept: the TV runs in the background as a party the characters throw for themselves, reacting to the real party's sounds and to phone input.
+- Architecture: an audio service (Python) publishes events over WebSocket to the display. A scene director maps events (cheer, laugh, applause, loudness level, magic word, phone emote, cake time) to character behaviors (idle, wander, dance, wave, cheer, laugh).
+- Tier 1, loudness: RMS level relative to a rolling baseline, so party music does not pin it. Easy.
+- Tier 2, sound classification: YAMNet (TFLite) labels such as laughter, cheering, applause, clapping. Should be light enough for the Pi. Needs tuning against real kids' noise. Test with the birthday girl and friends.
+- Tier 3, word triggers: constrained-vocabulary recognizer (e.g. Vosk grammar mode) on a small list of distinct multi-syllable words (unicorn, cupcake, rainbow, confetti, birthday). Unreliable at a distance in a noisy room, so use a near-field "magic microphone" with a push-to-talk button, and treat it as a bonus. Alternative: openWakeWord for a few custom phrases.
+- Hardware: USB mic (the Pi 5 has no mic input). Place it away from the TV speakers. Feedback risk: TV sound effects and party music can trigger the detectors. Use cooldowns and adaptive thresholds.
+- Cake/candles moment: trigger from a phone or button, not voice.
+- Privacy: process audio locally, store nothing, and let parents know.
+- Optional freebie: webcam room-motion level (frame differencing) could make the characters dance harder. No pose detection needed.
+
+### Physical / GPIO (PARKED; the MIDI pad replaces the arcade buttons)
+- Giant arcade buttons in a cardboard "Kitty control panel" (dances, confetti, outfit change).
+- Foil floor pads as a homemade dance mat.
+- Caveat: an AI HAT+ occupies the 40-pin header, so check for a stacking header or use USB buttons instead.
+
+### Phone controller (parents / older kids)
+- Buttons: heart, dance, throw cake, outfit change. Show the guest's name on the action.
+- Rate-limit per device so 15 phones do not spam the screen.
+
+### AI ideas (PARKED; not in scope)
+- "Ask Kitty": someone types an action/question, an LLM replies with a short in-character line plus an animation picked from a fixed list (JSON output), then TTS speaks it. Expect about 1.5-3 s latency, so use a "thinking" animation. Needs internet, so it must be optional, with a canned fallback.
+- Moderation: kids will type silly or naughty things. Use one supervised station or a parent approval queue instead of an open QR for free text. Restrict outputs to short, positive lines.
+- Pre-generated voice lines: generate about 60 TTS lines ahead of time (cheers, game events, birthday songs). Zero latency and works offline. Include the kids' names so Kitty can call them out.
+- Birthday wishes: guests submit a wish (with parent moderation), and Kitty reads them aloud at cake time.
+- TTS options: cloud (higher quality, needs internet) vs Piper (local, free, decent).
+- Note: Hello Kitty is canonically mouthless. Use speech bubbles or a friend character as the "voice".
+- Skip: live speech recognition. A room of 16 kids is too noisy.
+
+## Technical notes (camera sections are DROPPED; kept for reference)
+
+### Multi-person pose pipeline (what is involved)
+1. Capture: USB webcam (720p, MJPG, manual exposure via v4l2, autofocus off).
+2. Multi-person keypoints: MoveNet MultiPose, YOLO-pose, MediaPipe PoseLandmarker (num_poses), or Hailo on AI HAT+.
+3. Tracking: persistent IDs (ByteTrack or nearest-centroid + Hungarian matching), about 1 s dropout tolerance.
+4. Character assignment: claim a slot by a "raise both hands" join gesture, cap at about 4 players, free a slot after about 5 s lost.
+5. Pose to puppet: a few features only (arm angles, lean, jump/crouch), smoothed. Discrete poses are more reliable than continuous mirroring.
+6. Render: 2D SVG/Canvas puppets driven over WebSocket at 15-30 Hz.
+- Scoping decision: use a marked "stage" area on the floor (tape or rug) with a small number of players. Everyone else is audience.
+- Fallback: if the Pi cannot keep up, run the vision service on the Mac and use the Pi only as the display.
+
+### Hardware
+- AI HAT+ ruled out (price/availability). It was only ever needed for smooth multi-person pose mirroring. Red light/green light, wand tracking, and the photo booth run on the CPU.
+- Single-player pose (MediaPipe PoseLandmarker) and 2-4 player pose (its num_poses option, or MoveNet MultiPose) may run acceptably on the Pi 5 CPU. Unverified: benchmark on day 1 before committing.
+- Pi 5 CPU-only detection is roughly 5-8 fps in one third-party benchmark. Treat as a rough guide and test.
+- Webcam: something common with good V4L2 support (e.g. Logitech C920/C922).
+- Place the camera on top of the TV facing into the room, so kids walk toward the TV in red light/green light.
+
+### Room, lighting, and TV settings (camera items are reference only)
+- Avoid windows behind the players (backlight ruins exposure and detection). Prefer windows behind the camera, or close blinds on that side.
+- This room: windows flank the TV wall, so players facing the TV are front-lit. That is the good case. Watch the adjacent-wall window if it appears at the edge of the camera frame, and close its blinds if it does.
+- Camera on the mantle is high, so tilt it down. Make sure the recess walls do not clip the field of view (mount at the front edge of the TV).
+- Fireplace heat/airflow: do not run the fireplace, and keep the Pi ventilated if it sits behind the TV.
+- TV settings: turn on game/low-latency mode, disable auto power-off and screensaver, and check HDMI-CEC input switching. Also disable screen blanking on the Pi.
+- Lock exposure and white balance manually.
+- Test at the actual party time of day.
+- TV readability in bright daylight: set the TV brightness high and use bold, high-contrast art.
+
+### Fiducial-marker wand
+- OpenCV `cv2.aruco` gives tag ID plus position and orientation. Print on a paddle or wand, tag on both sides, roughly 10-15 cm for a few meters. Test the size.
+- Different tag IDs map to different characters (My Melody, Kuromi, and so on).
+- Color-blob tracking is a cheaper alternative, but avoid pink and red (party decor). Use neon green or blue.
+
+### Red light, green light engine
+- Grayscale, downscale, blur, frame-diff inside the play region.
+- Grace period of about 300-500 ms after each light change. Require motion above threshold for N consecutive frames. Calibrate a stillness baseline first.
+- Attribute movement per player using floor lanes or mats, or per tracked person via keypoint velocity.
+- TV shows Kitty as the caller. Green = dance/run, red = freeze pose plus sound. On a violation: buzzer, "oops" animation, back to start.
+- Finish line could be a human ref plus a big button that triggers the celebration.
+
+## Confirmed flow (Justin, draft v1)
+1. Guests arrive and scan the Wi-Fi QR, or use the Cloudflare Tunnel URL.
+2. Browser opens the Pi web server and shows a "remote" view.
+3. Remote view: screen interactions (confetti, events, color changes), create character, edit character, make character act (walk, talk, dance), download character (GIF requested; PNG is the easier v1).
+4. Special actions: USB MIDI pad controller (16 labeled pads: confetti, dance, laugh, cheer, etc.). The mic was dropped.
+5. Scenes: game time, cake time, opening gifts, dancing, hanging out, pinata time.
+6. Admin access for Justin and his wife to manage characters and scenes.
+- Party audio comes from the soundbar directly under the TV. Test the Pi's audio path through the TV to the soundbar on Day 1.
+- Biggest challenges (Justin): character assets, scenes, and how characters interact with each other and with scenes. Wants it scripted but dynamic, with a sense of autonomy.
+
+## Connectivity notes
+- Tunnel: cloudflared on the Pi makes an outbound connection to Cloudflare; a hostname on jusajuma.com relays to the Pi server. HTTPS, no router changes, needs internet. Protect admin routes.
+- Guest Wi-Fi networks often isolate clients from other devices. Test a phone on the guest network before the party. The tunnel is the fallback.
+- No real accounts: guests get a device token, admins use a passphrase.
+
+## Design approach (character system)
+- Characters are data (JSON: parts, colors, name, personality), not images. Stored on the Pi.
+- One shared rig: all parts drawn on the same canvas with named layers and pivot points, so any combination works and animation clips are written once for all characters. About 12 clips (idle, walk, dance x2-3, wave, jump, cheer, laugh, sleep, spin).
+- Art scope: about 35 parts (ears, bows/hats, hair, outfits, accessories, held items) using CSS color variables. Preview them on a gallery page.
+- Performance: avoid SVG filters, keep about 50 nodes per character, test 20-30 on screen, and fall back to PixiJS/canvas sprite textures if it stutters.
+- Autonomy: each character has mood/energy and a random personality. Every few seconds it picks an action weighted by scene, personality, mood, and nearby characters.
+- Smart objects: scene props (points of interest) advertise actions (cake table: gather, admire; gift pile: open, cheer; dance floor: dance; couch: chill). Characters choose among nearby advertised actions.
+- Pair interactions: high-five, hug, dance together, conga line, emoji or speech bubbles from canned lines.
+- Scripted beats: scene timelines with cues (e.g. cake: gather, candles lit, wait for blow trigger, candles out, confetti, cheer). Between cues, autonomy runs.
+- Scene = config: background SVG, props with points of interest, music, behavior weights, allowed remote actions. A new scene is a new config plus background art.
+- Depth bands (proposed): characters live in a front, middle, or back band (scale, vertical position, draw order). The most recent actors are in front and older ones step back. Start with character depth only. Layered background art is a stretch.
+- Admin: switch scene, trigger cue, hide names, remove character, and a "reset to safe scene" panic button. Rate-limit guest actions.
+
+- Game time scene: characters play their own versions of party games (pinata, pin the tail, musical chairs), mirroring the real games. Admin picks which game the characters are playing. Decision: no scoreboard or timer.
+
+## Dev workflow
+- Develop natively on the Mac (Node/Python server, browser as the "TV", phones on the Mac's LAN IP). Deploy to the Pi with git and systemd services. Docker is optional and not needed.
+- Docker on macOS cannot pass through USB devices (like the MIDI pad), so run the pad service natively on the Mac. Use keyboard keys as fake pad presses until the controller is set up.
+- Deploy to the Pi every day. Performance on the Pi is the main risk, not logic bugs.
+- Build a debug panel that fires fake events (pad presses, emotes, scene changes) and a bot mode that spawns fake characters and actions. Use them for stress tests and as a pre-guest demo mode.
+
+## Pad controller (special actions)
+- Candidate: M-VAVE wireless MIDI pad controller, 4x4 RGB velocity-sensitive pads, USB and Bluetooth MIDI. Based on the pasted description only. Not verified on a Pi.
+- Use wired USB, not Bluetooth. Check that it shows up as a MIDI device on the Pi (`amidi -l`, `aseqdump`) as soon as it arrives.
+- Read MIDI in a small server-side service and publish `pad:N` events with velocity to the event bus. This avoids browser MIDI permission prompts in the kiosk. Ignore aftertouch and note-off. Make sure Note Repeat is off.
+- Fixed pad meanings so the labels never change. The current scene decides which pads are enabled. Per-pad cooldowns plus a global rate limit. Velocity sets intensity (bigger confetti).
+- Labels: icons, not words, under clear tape, or a cardboard faceplate with larger icons around the pads.
+- Development: the same `pad:N` event from keyboard keys and the debug panel, so nothing waits on the hardware.
+- Pad LED colors: host control is device-specific and unverified. Do not depend on it.
+- Delivery: expected Sun 9/20. On arrival, run `amidi -l` and `aseqdump`.
+- Backup: a cheap USB numeric keypad. Only order it if the pad fails the Pi test on 9/20 (6 days of buffer).
+- Draft layout (4x4): Row 1 effects (confetti, hearts, fireworks, stars). Row 2 group emotes (cheer, laugh, wave, clap). Row 3 movement (dance, jump, spin, conga line). Row 4 mood (disco lights, rainbow, lights down, surprise/random).
+
+## Mic hardware notes (DROPPED; kept for reference)
+- Candidate: wedaniya wireless lavalier mic, 2-pack, USB-C/Lightning receiver (Amazon listing B0HBPZGLKT). The listing could not be opened automatically, so this is based on the pasted description only. Not verified on a Pi.
+- Pi 5 has USB-A ports only, so the USB-C receiver needs a USB-C to USB-A adapter. Check that it shows up as an audio input (`arecord -l`) as soon as it arrives.
+- Its noise reduction is likely bad for ambient cheer/laugh detection. Better fit for the near-field "magic microphone" role. Keep it in Standard mode (not Reverb).
+- Cheap fallback: a basic class-compliant wired USB mic for ambient sound. Mic features are the first thing cut, so spend as little as possible.
+- Placement: passive USB cables top out around 5 m. Active extension cables go further. Point the mic away from the soundbar. With the wireless lav, only the transmitter moves, so placement is free.
+
+## Parked: ESP32 ideas (not for this party)
+- Keep the scene director's event bus source-agnostic (phone, pad, later devices) so ESP32 events could plug in later.
+- Pinata: accelerometer/vibration sensor in the real pinata, so hits crack the on-screen pinata in sync. One board.
+- Magic wand: ESP32 with an IMU, flick to cast spells/confetti on screen. Replaces the camera-based wand.
+- Wearable badges: identity built in, accelerometer for dance energy and freeze dance / red light green light (caught if moving). Needs enclosed batteries and no small parts for young kids.
+- Cake table: ESP32 with a MEMS mic or breath sensor for a blow-out trigger.
+- Musical chairs: pressure sensor per chair, screen shows who is out.
+- Scavenger hunt: badges tap RFID/NFC tags around the house to unlock accessories.
+- Transport options: ESP-NOW to a gateway ESP32 on the Pi's USB, BLE advertising to the Pi, or Wi-Fi WebSocket.
+
+## Assets and rights
+- Build Kitty and friends as simple SVG parts (ears, bow, arms, eyes) for private party use only. Sanrio owns the characters.
+
+## Open questions (answered Sep 18)
+- How will kids without phones create characters? Proposed: 2-3 tablet/laptop stations plus the QR code for parents' phones.
+  - There will be a tablet for this purpose.
+- Admin auth: shared passphrase vs separate logins for Justin and his wife.
+  - Shared passphrase.
+- Final 16 pad actions (a draft layout is in the pad controller section).
+  - I am happy with the ones in the draft state above.
+- Music and sound effects for the scenes: royalty-free or your own?
+  - I'll provide these. For now, we can use placeholders and I can swap out the audio files later.
+- Run-of-show: what order will the scenes run at the party?
+  - Start with in "chilling" scene (just hanging out, mingling). That will be the default scene. Then:
+    - Game time
+    - Cake time
+    - Gift time
+
+## Requirements and timeline
+See `requirements.md` (what to build) and `timeline.md` (day-by-day plan, gates, cut list, risks, party-day checklist).
