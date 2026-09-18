@@ -16,10 +16,10 @@
 - Two admins (Justin and his wife) run scenes and moderation, and use focus mode to keep attention on the birthday girl.
 - Everything runs on a Raspberry Pi 5 over home Wi-Fi. Develop on a Mac, deploy to the Pi. Justin owns scope.
 
-## Stack (recommended; confirm in Phase 0 and record in `docs/decisions.md`)
-- Node.js LTS with TypeScript; `ws` for WebSocket.
-- Vite with vanilla TypeScript (or Preact) for the three web apps: guest, admin, display.
-- Characters as DOM SVG with CSS transforms; fall back to canvas or PixiJS if the Phase 0 spike fails.
+## Stack (approved 2026-09-18, decision D-28)
+- Node.js LTS with TypeScript; `ws` for WebSocket. Record the exact Node version in `docs/runbooks/pi-setup.md` when the Pi is set up.
+- Vite for the three web apps: React for the guest and admin apps, plain TypeScript for the display. Keep the WebSocket connection and app state in a small store outside the React components, so re-renders never open a second connection.
+- Characters as DOM SVG with CSS transforms, one `<svg>` per character inside a positioned wrapper. Effects (confetti, fireworks, stars) go on one canvas overlay unless the Phase 0 spike shows DOM effects are fine. If the spike stutters, fall back to canvas or PixiJS for characters.
 - Characters and guests stored as JSON files on disk.
 - Pad service reads MIDI on the Pi: Python `mido` with `python-rtmidi`, or Node `easymidi`, whichever installs cleanly (decide in Phase 0).
 - systemd services on the Pi; a Chromium kiosk for the TV.

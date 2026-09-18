@@ -1,4 +1,4 @@
-> **Version v1, frozen 2026-09-18.** Changes need Justin's approval, an entry in `decisions.md`, and a version bump here. New ideas go in `backlog.md`.
+> **Version v1.2** (v1 frozen 2026-09-18; amended 2026-09-18: Game time is an ordinary scene, decision D-24; shared tablet profile, decision D-25). Changes need Justin's approval, an entry in `decisions.md`, and a version bump here. New ideas go in `backlog.md`.
 
 # Hello Kitty Party Display: Requirements (v1 draft)
 
@@ -48,10 +48,10 @@ A Hello Kitty themed "party on the TV." Simple layered SVG characters, created b
 |---|---|---|
 | G-1 | M | Guests join the Wi-Fi with a QR code and open the site with a second QR code. The site works in current iOS Safari, Android Chrome, and the tablet's browser. |
 | G-2 | M | No accounts. On first open, the guest enters a display name. A device token in the browser keeps the profile across refreshes. |
-| G-3 | M | On the shared tablet, a "New guest" button starts a fresh profile (new name, new token), so many kids can use it one after another. Characters already created stay on the TV. |
+| G-3 | M | **Shared tablet.** The tablet is a fallback for kids without a phone. It is one shared device profile (`kind: shared`) that holds every kid's character, one character per kid, up to a configurable cap (default 20). A kid taps "Add my character" to make theirs. There is no "New guest" flow. Characters stay on the TV. |
 | G-4 | S | **Name filter.** A name must be short (about 12 characters), use plain letters, numbers, and spaces, and pass a blocklist of inappropriate words. A name that fails gets a friendly "try another name" on the phone. Names that pass show right away. |
 | G-5 | X | Cloudflare Tunnel as a second way in. Admin routes must be protected. |
-| G-6 | M | A device profile can hold up to 3 characters that belong to different people. For example, a parent's phone can hold both children's characters, and the parent switches between them. |
+| G-6 | M | A personal device profile (a phone) can hold up to 3 characters that belong to different people. For example, a parent's phone can hold both children's characters, and the parent switches between them. The shared tablet has the higher cap in G-3. |
 
 ### 5.2 Guest app: modes
 
@@ -61,7 +61,7 @@ A Hello Kitty themed "party on the TV." Simple layered SVG characters, created b
 | A-2 | M | Mobile-first, portrait layout, large tap targets, icons over text so young kids can use it. |
 | A-3 | M | The app shows connection status and reconnects automatically. |
 | A-4 | M | Opens in Character mode until the guest has a character, then in Interact mode. (proposed) |
-| A-5 | M | **Character strip** across the top of both modes: one slot per saved character (up to 3) showing a thumbnail and the name, and a "+" in an empty slot. Tapping a slot makes that character the **active character** (highlighted). In Character mode the active character is the one being edited or removed. In Interact mode it is the one that acts. |
+| A-5 | M | **Character strip** across the top of both modes: one slot per saved character (up to 3 on a phone; the shared tablet's strip scrolls) showing a thumbnail and the name, and a "+" in an empty slot. Tapping a slot makes that character the **active character** (highlighted). In Character mode the active character is the one being edited or removed. In Interact mode it is the one that acts. On the shared tablet in Interact mode, characters that are waiting, playing, or cooling down are dimmed and cannot be selected. |
 | A-6 | M | The active character is shown clearly near the button grid, so whoever holds the phone can see who is up. (proposed) |
 
 ### 5.3 Character mode
@@ -70,7 +70,7 @@ A Hello Kitty themed "party on the TV." Simple layered SVG characters, created b
 |---|---|---|
 | C-1 | M | Create a character: choose a part for each slot (ears, bow/hat, hair, face, outfit, accessory), colors, attribute options (hair, skin tone, glasses, freckles), and a name. |
 | C-2 | M | Live preview while editing, with an idle animation. |
-| C-3 | M | A guest can have at most **3** characters. The UI shows the slots. Creating a fourth is disabled with a clear message. |
+| C-3 | M | A personal device (a phone) can have at most **3** characters. The UI shows the slots. Creating a fourth is disabled with a clear message. The shared tablet has a higher cap (G-3). |
 | C-4 | M | Edit an existing character. Changes appear on the TV. |
 | C-5 | M | Remove a character. It disappears from the TV. |
 | C-6 | M | New characters enter the TV scene with a short entrance animation. |
@@ -163,7 +163,7 @@ The default scene is **Chilling**. Run-of-show, advanced manually by an admin: C
 | Scene | Pri | Description |
 |---|---|---|
 | Chilling (default) | M | Characters mingle, wander, and hang out around a couch and table. |
-| Game time | M | Characters play their own versions of party games. The admin picks the game: musical chairs, pin the tail, or pinata. No scoreboard or timer. |
+| Game time | M | An ordinary scene with a party-game background (it may include a pinata and a pin-the-tail game, for show only). Characters interact with the scene and each other and react to events. No game rules, no admin game pick, no scoreboard or timer. |
 | Cake time | M | Scripted moment, in focus mode. Characters gather at the cake table and candles are lit while the room sings. The scene waits for the admin's "blow out" cue, then candles go out, fireworks, and everyone cheers. |
 | Gift time | M | Focus mode. A calm scene: characters sit in a circle around a gift pile with quiet or no music, so everyone's attention stays on the birthday girl. |
 | Dancing | S | Dance floor scene. Kept, but not in the run-of-show. The admin can switch to it any time. |

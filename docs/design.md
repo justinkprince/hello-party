@@ -13,7 +13,7 @@ Active design guidance, extracted and tightened from the original planning notes
 | Color variables | Parts use CSS variables (skin, hair, bow, outfit) so one drawing gives many looks. |
 | Clips | About 12: idle, walk, dance (2 to 3 variants), wave, jump, cheer, laugh, clap, sleep, spin. |
 | Style | Bold, high-contrast, readable on a TV in bright daylight. Original Kitty-inspired art only. |
-| Performance rules | No SVG filters. About 50 nodes per character. Test 20 to 30 characters at once on the Pi. If the spike stutters, fall back to canvas or PixiJS sprite textures. |
+| Performance rules | No SVG filters. About 50 nodes per character. Test 20 to 30 characters at once on the Pi. If the spike stutters, fall back to canvas or PixiJS sprite textures. Give each character its own `<svg>` inside a positioned wrapper so moving it is cheap, and draw effects (confetti, fireworks, stars) on one canvas overlay unless the spike shows DOM effects are fine. |
 | Attribute options | Hair, skin tone, glasses, freckles, chosen from fixed lists so any character looks like its owner without photos. |
 
 ## Autonomy and smart objects
@@ -31,7 +31,7 @@ High-five, hug, dance together, conga line, plus icon bubbles or canned-line spe
 
 - A scene is a config: background SVG, props with points of interest, music and volume, behavior weights, interaction level, TV mood, transition card, allowed actions, optional cue timeline.
 - A new scene means a new config and a background, not new code. Schema in `contracts.md`.
-- Game time: characters play their own versions of party games (musical chairs, pin the tail, pinata). An admin picks the game. No scoreboard or timer.
+- Game time is an ordinary scene: a party-game background (a pinata and a pin-the-tail game may appear, for show only) with characters interacting with it and each other and reacting to events. There are no game rules, no game choice, no scoreboard, and no timer.
 
 ## Scripted beats and cues
 

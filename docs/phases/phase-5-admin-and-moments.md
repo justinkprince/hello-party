@@ -21,7 +21,7 @@ The full run-of-show works from the admin panel: scene switching, timeouts, tran
 - [ ] Admin panel (shared passphrase): switch scene, trigger cues, remove character, reset to safe scene, time out a device (device list with character names and recent action counts), focus on/off; then hide names, change the cooldown
 - [ ] Transition cards (TV) and focus mode (phones lock to a calm screen, the TV goes calm, failsafe auto-release), used by Cake time and Gift time
 - [ ] Broadcast a sound and banner to all phones (audio unlock on first tap, sound toggle, preloaded files)
-- [ ] Game time scene (musical chairs, pin the tail, pinata variations)
+- [ ] Game time scene (an ordinary scene config: a party-game background with a pinata and a pin-the-tail game for show, and props for characters to visit; no game logic and no game choice)
 - [ ] Gift time scene (as a config, locked and calm)
 - [ ] Dancing scene (kept, not in the run-of-show)
 - [ ] Polish the TV queue display (thumbnails, names, +N waiting, hides when empty)

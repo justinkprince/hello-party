@@ -17,19 +17,19 @@ Schedule: on track. Nothing cut.
 | 6 Polish and hardening | Days 7-8, Thu 9/24 to Fri 9/25 | Not started | `phase-6-polish-and-hardening` | `phase-6-done` | |
 
 ## Now / Next / Blocked
-- **Now:** Phase 0 paused. Folder scaffold and `.env.example` are written to the working tree (uncommitted).
+- **Now:** Phase 0 paused. Folder scaffold, `.env.example`, and the contracts review (all 19 `PROPOSED` items approved, D-26) are done in the working tree (uncommitted).
 - **Next:** an agent with a shell (and Pi access) does the rest of Phase 0: create branch `phase-0-foundations` and commit the scaffold, dev server, spike, Pi setup, scripts, audio test, then record the evidence.
 - **Blocked:** everything that needs a shell or the Pi (see Needs Justin). This session had file access only. The `docs-pack-done` tag exists (checked in `.git/refs/tags`).
 
 ## Needs Justin
 - [ ] Phase 0 remainder needs a session with a shell and Pi access (SSH or keyboard), the TV on, and approval of the static IP. Before that session: `git checkout -b phase-0-foundations` and commit the scaffold (`phase0: scaffold folders and .env.example`). (Fri 9/18)
-- [ ] Approve or change the stack in `AGENTS.md` (Node LTS, TypeScript, `ws`, Vite, DOM SVG) so it can be logged as a decision (O-7) (Fri 9/18)
+- [x] Stack approved (D-28): Node LTS, TypeScript, `ws`, Vite, React for guest and admin, DOM SVG (one `<svg>` per character) with effects on a canvas overlay (O-7)
 - [ ] Run the git setup commands from the hand-off report (init, snapshot, two docs commits, tag `docs-pack-done`, archive commit). Then delete the old root `timeline.md` if it is still there. (Fri 9/18)
-- [ ] Order the MIDI pad now (expected Sun 9/20) and check the box has a USB cable (Fri 9/18)
-- [ ] Order a micro-HDMI to HDMI cable and any missing Pi kit items (Fri 9/18)
+- [x] Order the MIDI pad now (ordered, expected Sun 9/20); still check the box has a USB cable (Fri 9/18)
+- [x] Micro-HDMI to HDMI cable: have it. Pi has active cooling. Power supply and spare microSD still unconfirmed (Fri 9/18)
 - [ ] Confirm the tablet is available (by Sun 9/20)
-- [ ] Decide the open items in `docs/requirements.md` section 9; see "Open" in `docs/decisions.md` (Fri 9/18, some at rehearsal)
-- [ ] Test on real phones, an iPhone and an Android, when Phase 2 is ready (Sun 9/20)
+- [x] Open items from requirements section 9 answered (D-27, D-23): cooldown starting values, delete data after the party, queue display list only, depth bands start at 6 / 6 / 4, floor-only backgrounds. Still open: on-stage cap (after the spike) and final cooldown tuning (rehearsal).
+- [ ] Test on real phones, an iPhone and an Android, when Phase 2 is ready (Sun 9/20). Include PNG download (iPhone save behavior) and the shared tablet flow.
 - [ ] Order the USB keypad backup only if the pad fails the Pi test (Sun 9/20)
 - [ ] Provide final music and sound effect files (Thu 9/24; placeholders until then, swapped by filename)
 - [ ] Print QR signage and label the pads (Thu 9/24)
@@ -42,9 +42,10 @@ Schedule: on track. Nothing cut.
 ## Session log
 Newest first. At most 5 lines per entry.
 
-- **2026-09-18, Phase 0 agent (Claude, file access only).** Checked `docs-pack-done` tag exists. Created the planned folders with README/.gitkeep and `.env.example` (variable names provisional).
+- **2026-09-18, Phase 0 agent (Claude, file access only).** Created the planned folders and `.env.example`. Reviewed all 19 `PROPOSED` contract items with Justin; all approved (D-26).
+  Requirements amended to v1.2: Game time is an ordinary scene (D-24); shared tablet profile (D-25). Stack approved (D-28). Docs updated to match.
   Gate: not met; nothing run on the Mac or Pi (no shell, no Pi). No commits, no branch.
-  Next: agent with shell and Pi does the dev server, spike, Pi setup, scripts, audio, contracts review, decisions.
+  Next: agent with shell and Pi does the dev server, spike, Pi setup, scripts, audio, pad service language.
 
 - **2026-09-18, docs-pack agent (Claude).** Built the hand-off pack: README, AGENTS, PROGRESS, `docs/` (contracts, design, decisions, timeline, backlog, phases 0-6, runbooks). Moved requirements and notes; slimmed the timeline.
   Gate: n/a. Checks were done by reading, since there was no shell (see `docs/decisions.md`, CN-13).

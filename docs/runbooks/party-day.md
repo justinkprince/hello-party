@@ -8,7 +8,7 @@ For Justin and his wife. Party: Sat Sep 26, 2026. Admin button names below follo
 - [ ] Rehearsal with the birthday girl and friends or family on their own devices (aim for 10 or more)
 - [ ] Run the whole run-of-show, including focus mode and a phone that joins late
 - [ ] Spam test with bots running at the same time
-- [ ] Try a fourth character on one phone; two characters on one phone; tablet "New guest"
+- [ ] Try a fourth character on one phone; two characters on one phone; several characters added on the shared tablet
 - [ ] Time out a device; hide a name; broadcast a sound and read the reached count
 - [ ] Press "Reset to safe scene" while effects are running
 - [ ] Swap one audio file by name and hear the change
@@ -34,7 +34,7 @@ Advance each scene from the admin panel. Chilling is the default.
 | Step | Scene | Admin action | What guests see |
 |---|---|---|---|
 | 1 | Chilling (default) | Reset to the starting scene. Optional: demo mode until guests arrive. | Characters mingle around the couch and table. All 16 actions are open. |
-| 2 | Game time | Switch scene, then pick the game (musical chairs, pin the tail, or pinata). | Transition card, then characters play their version. All 16 actions are open. |
+| 2 | Game time | Switch scene. | Transition card, then characters mingle around the party-game background (pinata, pin the tail) and react to events. All 16 actions are open. |
 | 3 | Cake time (focus on) | Switch scene. The card "Time to sing Happy Birthday!" holds while the room sings. Press the "blow out" cue when the song ends. | Phones show the calm screen, and the pad is ignored. Candles go out, fireworks, everyone cheers. |
 | 4 | Gift time (focus on) | Switch scene. Release focus if it needs to end early. | Calm scene, characters sit around the gift pile. Phones stay on the calm screen. |
 | 5 | Back to Chilling, or Dancing | Switch scene (focus ends when the scene is not locked). | Everything opens again. Dancing is optional. |
@@ -67,6 +67,6 @@ Advance each scene from the admin panel. Chilling is the default.
 ## Teardown
 
 - [ ] Power down the Pi cleanly
-- [ ] Decide whether to delete guest and character data (open item O-3 in `../decisions.md`; decision D-23 proposes yes). Do not delete anything until Justin says so.
+- [ ] Delete guest and character data (decision D-23: yes). Take a keepsake copy of `data/` first if any characters should be kept, and do not delete anything until Justin says so on the day.
 - [ ] Take a final copy of `data/` first if any characters should be kept as a keepsake
 - [ ] Update `../../PROGRESS.md` with how it went and anything to fix for next time

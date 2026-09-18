@@ -12,26 +12,26 @@ Scaffold the repo, get the Pi ready (OS, Node, kiosk, static IP, audio), review 
 
 ## Tasks
 Lead-time orders (from the old "Order today" list):
-- [ ] MIDI pad controller (order today; expected to arrive Sun 9/20). Check that the box has a USB cable (get a USB-C to USB-A cable or adapter if not).
-- [ ] Micro-HDMI to HDMI cable for the Pi 5, if you do not have one
-- [ ] Anything missing from the Pi kit: 27W power supply, active cooler, spare microSD card
+- [x] MIDI pad controller (ordered; on its way, expected to arrive Sun 9/20). Check that the box has a USB cable (get a USB-C to USB-A cable or adapter if not).
+- [x] Micro-HDMI to HDMI cable for the Pi 5 (have it)
+- [ ] Anything missing from the Pi kit: 27W power supply, active cooler (have it), spare microSD card
 - [x] Tablet for character creation (confirmed: there will be one)
 - [ ] Paper/cardstock for QR signage
 
 Day 1 tasks:
 - [x] Confirm the party date (Sat 9/26 confirmed)
-- [ ] Review `docs/requirements.md` and confirm the open items at the end of it
+- [x] Review `docs/requirements.md` and confirm the open items at the end of it (answered 2026-09-18, D-27 and D-23; the on-stage cap waits for the spike and the cooldown tuning for the rehearsal)
 - [ ] Order hardware (the list above)
 - [ ] Pi: OS updated, Node installed, Chromium kiosk auto-start, static IP
 - [ ] Test audio: Pi to TV to soundbar over HDMI
-- [ ] Performance spike on the Pi: 30 simple animated SVG characters at 1080p. Record the frame rate.
+- [ ] Performance spike on the Pi: 30 simple animated SVG characters at 1080p, one `<svg>` per character. Also try a canvas overlay with a few hundred particles (the effects layer). Record the frame rate.
 - [ ] Repo initialized in this folder. Dev server runs on the Mac and on the Pi.
 
 From requirements and the hand-off pack (CN-12):
 - [x] Create the planned code layout (folders below) with a one-line README or `.gitkeep` in each, plus `.env.example` with placeholder names only
-- [ ] Confirm the stack in `AGENTS.md` (Node LTS with TypeScript, `ws`, Vite, DOM SVG) and record it in `docs/decisions.md`
+- [x] Confirm the stack in `AGENTS.md` (Node LTS with TypeScript, `ws`, Vite with React for guest and admin, DOM SVG) and record it in `docs/decisions.md` (approved 2026-09-18, decision D-28)
 - [ ] Choose the pad service language (`mido` with `python-rtmidi`, or `easymidi`) by seeing which installs cleanly on the Pi
-- [ ] Review every `PROPOSED` item in `docs/contracts.md`; fix or approve each and update the file
+- [x] Review every `PROPOSED` item in `docs/contracts.md`; fix or approve each and update the file (all 19 approved 2026-09-18, decision D-26)
 - [ ] Deploy script and health-check script in `scripts/`, tested Mac to Pi
 - [ ] Fill in `AGENTS.md` "How to run and test" and `docs/runbooks/pi-setup.md` with commands that actually worked; clear the `UNVERIFIED` labels only for those
 - [ ] Set the on-stage cap default from the spike and record it in `docs/decisions.md`

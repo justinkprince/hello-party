@@ -6,7 +6,7 @@ Planned: Day 3, Sun 9/20 | Branch: phase-2-server-and-character-mode | Tag when 
 A real server and a working guest app in Character mode: guests join by QR, enter a name, create and edit up to 3 characters, and see them appear on the TV. Also check the pad hardware the day it arrives.
 
 ## Requirements covered
-- G-1, G-2, G-3, G-4, G-6: QR access, device-token profiles, tablet "New guest", name filter, up to 3 characters per device.
+- G-1, G-2, G-3, G-4, G-6: QR access, device-token profiles, the shared tablet profile ("Add my character", no "New guest"), name filter, up to 3 characters per phone.
 - A-1 to A-6: two-mode shell with the character strip. Interact mode is only a placeholder here (built in Phase 4).
 - C-1 to C-7: create, live preview with idle animation, 3-character limit, edit, remove, entrance animation, on-stage toggle and cap (C-7 uses the cap from Phase 0).
 - C-10 (storage): characters saved as JSON on disk. The format came from Phase 1.
@@ -17,7 +17,7 @@ A real server and a working guest app in Character mode: guests join by QR, ente
 - [ ] Server: WebSocket, character storage (JSON on disk), guest profile (name + device token)
 - [ ] Guest app shell with the Character / Interact mode switch and the character strip (up to 3 names/thumbnails, tap to switch the active character)
 - [ ] Character mode: create, edit, remove (max 3 per guest), name, live preview, and the character appears on the TV
-- [ ] Shared tablet: a "New guest" button starts a fresh profile
+- [ ] Shared tablet: one shared profile (`kind: shared`, opened from a private URL with `SHARED_TABLET_KEY`) holding every kid's character, capped by `maxCharactersShared` (default 20). A kid taps "Add my character"; the strip scrolls; in Interact mode, characters that are waiting or cooling down are dimmed and cannot be selected.
 - [ ] Test on real phones over Wi-Fi, including the guest network isolation check
 - [ ] Scan the Wi-Fi and site QR codes from an iPhone and an Android phone
 - [ ] Pad controller arrives (expected Sun 9/20): plug it into the Pi, confirm it shows up (`amidi -l`), and that pad presses appear as note-on messages (`aseqdump`)
@@ -55,7 +55,7 @@ From requirements and the hand-off pack (CN-12):
 3. Create characters, including two on one phone, edit one, remove one; confirm the TV follows.
 4. Try a fourth character on one phone and confirm the clear message.
 5. Refresh a phone and confirm the profile and characters persist; restart the server and confirm characters persist.
-6. On the tablet, use "New guest" and confirm earlier characters stay on the TV.
+6. On the tablet, add several characters with "Add my character" and confirm they all stay on the TV, and that a character in cooldown is dimmed in Interact mode.
 7. Plug in the pad; run `amidi -l` and `aseqdump`; press pads and record what appears.
 
 ## Slip rules and cut items
