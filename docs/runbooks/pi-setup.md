@@ -6,6 +6,8 @@ Ask Justin before changing the network, buying anything, or wiping anything.
 
 | # | Step | Status | Verified command or result |
 |---|---|---|---|
+| 0a | microSD flashed with Raspberry Pi OS (64-bit, standard image with desktop) using Raspberry Pi Imager. Imager settings: hostname, user account, SSH on, locale and time zone, Wi-Fi (entered in the Imager, never in git). Recommendation, not yet tried on this Pi. | UNVERIFIED | |
+| 0b | First boot works: the Pi boots to the desktop on the TV and is reachable by SSH from the Mac | UNVERIFIED | |
 | 1 | OS updated | UNVERIFIED | |
 | 2 | Node LTS installed (version recorded) | UNVERIFIED | |
 | 3 | Static IP set (address recorded, with Justin's approval) | UNVERIFIED | |
@@ -31,3 +33,4 @@ Ask Justin before changing the network, buying anything, or wiping anything.
 
 - Keep the Pi ventilated if it sits behind the TV. Do not run the fireplace.
 - Record anything surprising here, so the party-day runbook can use it.
+- OS choice (recommendation, `UNVERIFIED`): Raspberry Pi OS 64-bit, the standard image with the desktop. As of April 2026 that image is based on Debian 13 (Trixie). Not Lite, because the Chromium kiosk needs a desktop session; not Full, because the extra apps are not needed. Use a good-quality microSD card of 32 GB or more, and keep the spare card for the SD image copy (R-5).

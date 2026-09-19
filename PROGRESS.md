@@ -8,7 +8,7 @@ Schedule: on track. Nothing cut.
 | Phase | Planned | Status | Branch | Tag | Gate result |
 |---|---|---|---|---|---|
 | Docs pack | Day 1, Fri 9/18 | Done | `main` | `docs-pack-done` | Files written and cross-checked by reading. Git commits and the tag are created by Justin (see Needs Justin). |
-| 0 Foundations | Day 1, Fri 9/18 | In progress | `phase-0-foundations` (not created yet; work is uncommitted on `main`) | `phase-0-done` | Not met. No spike, Pi, or audio evidence yet. |
+| 0 Foundations | Day 1, Fri 9/18 | In progress | `phase-0-foundations` (to be created from `main`; the first Phase 0 commit is already on `main`) | `phase-0-done` | Not met. No spike, Pi, or audio evidence yet. |
 | 1 Characters | Day 2, Sat 9/19 | Not started | `phase-1-characters` | `phase-1-done` | |
 | 2 Server and Character mode | Day 3, Sun 9/20 | Not started | `phase-2-server-and-character-mode` | `phase-2-done` | |
 | 3 Scene engine | Day 4, Mon 9/21 | Not started | `phase-3-scene-engine` | `phase-3-done` | |
@@ -17,12 +17,12 @@ Schedule: on track. Nothing cut.
 | 6 Polish and hardening | Days 7-8, Thu 9/24 to Fri 9/25 | Not started | `phase-6-polish-and-hardening` | `phase-6-done` | |
 
 ## Now / Next / Blocked
-- **Now:** Phase 0 paused. Folder scaffold, `.env.example`, and the contracts review (all 19 `PROPOSED` items approved, D-26) are done in the working tree (uncommitted).
-- **Next:** an agent with a shell (and Pi access) does the rest of Phase 0: create branch `phase-0-foundations` and commit the scaffold, dev server, spike, Pi setup, scripts, audio test, then record the evidence.
+- **Now:** Phase 0 paused. Folder scaffold, `.env.example`, and the contracts review (all 19 `PROPOSED` items approved, D-26) are committed (on `main`; the `phase-0-foundations` branch was renamed to `main` before the push).
+- **Next:** an agent with a shell (and Pi access) does the rest of Phase 0: dev server, spike, Pi setup, scripts, audio test, pad service language, then records the evidence.
 - **Blocked:** everything that needs a shell or the Pi (see Needs Justin). This session had file access only. The `docs-pack-done` tag exists (checked in `.git/refs/tags`).
 
 ## Needs Justin
-- [ ] Phase 0 remainder needs a session with a shell and Pi access (SSH or keyboard), the TV on, and approval of the static IP. Before that session: `git checkout -b phase-0-foundations` and commit the scaffold (`phase0: scaffold folders and .env.example`). (Fri 9/18)
+- [ ] Phase 0 remainder needs a session with a shell and Pi access (SSH or keyboard), the TV on, and approval of the static IP. (Fri 9/18)
 - [x] Stack approved (D-28): Node LTS, TypeScript, `ws`, Vite, React for guest and admin, DOM SVG (one `<svg>` per character) with effects on a canvas overlay (O-7)
 - [ ] Run the git setup commands from the hand-off report (init, snapshot, two docs commits, tag `docs-pack-done`, archive commit). Then delete the old root `timeline.md` if it is still there. (Fri 9/18)
 - [x] Order the MIDI pad now (ordered, expected Sun 9/20); still check the box has a USB cable (Fri 9/18)
@@ -44,7 +44,7 @@ Newest first. At most 5 lines per entry.
 
 - **2026-09-18, Phase 0 agent (Claude, file access only).** Created the planned folders and `.env.example`. Reviewed all 19 `PROPOSED` contract items with Justin; all approved (D-26).
   Requirements amended to v1.2: Game time is an ordinary scene (D-24); shared tablet profile (D-25). Stack approved (D-28). Docs updated to match.
-  Gate: not met; nothing run on the Mac or Pi (no shell, no Pi). No commits, no branch.
+  Gate: not met; nothing run on the Mac or Pi (no shell, no Pi). Committed on `main` (branch renamed).
   Next: agent with shell and Pi does the dev server, spike, Pi setup, scripts, audio, pad service language.
 
 - **2026-09-18, docs-pack agent (Claude).** Built the hand-off pack: README, AGENTS, PROGRESS, `docs/` (contracts, design, decisions, timeline, backlog, phases 0-6, runbooks). Moved requirements and notes; slimmed the timeline.

@@ -22,6 +22,7 @@ Day 1 tasks:
 - [x] Confirm the party date (Sat 9/26 confirmed)
 - [x] Review `docs/requirements.md` and confirm the open items at the end of it (answered 2026-09-18, D-27 and D-23; the on-stage cap waits for the spike and the cooldown tuning for the rehearsal)
 - [ ] Order hardware (the list above)
+- [ ] microSD flashed with Raspberry Pi OS (Justin does this; see `docs/runbooks/pi-setup.md` steps 0a and 0b) and the Pi boots to the desktop on the TV with SSH reachable from the Mac
 - [ ] Pi: OS updated, Node installed, Chromium kiosk auto-start, static IP
 - [ ] Test audio: Pi to TV to soundbar over HDMI
 - [ ] Performance spike on the Pi: 30 simple animated SVG characters at 1080p, one `<svg>` per character. Also try a canvas overlay with a few hundred particles (the effects layer). Record the frame rate.
@@ -32,6 +33,7 @@ From requirements and the hand-off pack (CN-12):
 - [x] Confirm the stack in `AGENTS.md` (Node LTS with TypeScript, `ws`, Vite with React for guest and admin, DOM SVG) and record it in `docs/decisions.md` (approved 2026-09-18, decision D-28)
 - [ ] Choose the pad service language (`mido` with `python-rtmidi`, or `easymidi`) by seeing which installs cleanly on the Pi
 - [x] Review every `PROPOSED` item in `docs/contracts.md`; fix or approve each and update the file (all 19 approved 2026-09-18, decision D-26)
+- [ ] Choose how code gets to the Pi (for example, the built files copied over SSH, or a bare git repo on the Pi) and record it in `docs/decisions.md`. Nothing is pushed to any remote without asking.
 - [ ] Deploy script and health-check script in `scripts/`, tested Mac to Pi
 - [ ] Fill in `AGENTS.md` "How to run and test" and `docs/runbooks/pi-setup.md` with commands that actually worked; clear the `UNVERIFIED` labels only for those
 - [ ] Set the on-stage cap default from the spike and record it in `docs/decisions.md`
