@@ -16,6 +16,9 @@
 - Two admins (Justin and his wife) run scenes and moderation, and use focus mode to keep attention on the birthday girl.
 - Everything runs on a Raspberry Pi 5 over home Wi-Fi. Develop on a Mac, deploy to the Pi. Justin owns scope.
 
+## Easy to get wrong
+- **One character per kid.** Every kid has exactly one character, never more. A phone can hold up to 3 characters only because one parent may have up to 3 kids, each with their own character. The shared tablet holds many kids, one character each. So the number of characters is about the number of kids, not a multiple of it. Size caps, tests, and bots on that basis. (Decision D-30; requirements G-3, G-6, C-3.)
+
 ## Stack (approved 2026-09-18, decision D-28)
 - Node.js LTS with TypeScript; `ws` for WebSocket. Record the exact Node version in `docs/runbooks/pi-setup.md` when the Pi is set up.
 - Vite for the three web apps: React for the guest and admin apps, plain TypeScript for the display. Keep the WebSocket connection and app state in a small store outside the React components, so re-renders never open a second connection.

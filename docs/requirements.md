@@ -1,4 +1,4 @@
-> **Version v1.2** (v1 frozen 2026-09-18; amended 2026-09-18: Game time is an ordinary scene, decision D-24; shared tablet profile, decision D-25). Changes need Justin's approval, an entry in `decisions.md`, and a version bump here. New ideas go in `backlog.md`.
+> **Version v1.3** (v1 frozen 2026-09-18; amended 2026-09-18: Game time is an ordinary scene, decision D-24; shared tablet profile, decision D-25; one character per kid stated in section 2, a clarification, decision D-30). Changes need Justin's approval, an entry in `decisions.md`, and a version bump here. New ideas go in `backlog.md`.
 
 # Hello Kitty Party Display: Requirements (v1 draft)
 
@@ -22,6 +22,7 @@ A Hello Kitty themed "party on the TV." Simple layered SVG characters, created b
 - Development: on a Mac, deployed to the Pi with git and systemd.
 - Audio: Justin supplies the final music and sound effects. Placeholders are used until then.
 - Admins: Justin and his wife, sharing one passphrase.
+- **One character per kid.** Every kid has exactly one character. A phone can hold up to 3 characters only because a parent may have up to 3 kids, each with their own; the shared tablet holds many kids, one character each. The number of characters is about the number of kids (decision D-30; see G-3, G-6, C-3).
 
 ## 3. Roles
 

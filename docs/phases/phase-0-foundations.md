@@ -25,7 +25,7 @@ Day 1 tasks:
 - [ ] microSD flashed with Raspberry Pi OS (Justin does this; see `docs/runbooks/pi-setup.md` steps 0a and 0b) and the Pi boots to the desktop on the TV with SSH reachable from the Mac
 - [ ] Pi: OS updated, Node installed, Chromium kiosk auto-start, static IP
 - [ ] Test audio: Pi to TV to soundbar over HDMI
-- [ ] Performance spike on the Pi: 30 simple animated SVG characters at 1080p, one `<svg>` per character. Also try a canvas overlay with a few hundred particles (the effects layer). Record the frame rate.
+- [x] Performance spike on the Pi: 30 simple animated SVG characters at 1080p, one `<svg>` per character. Also try a canvas overlay with a few hundred particles (the effects layer). Record the frame rate.
 - [ ] Repo initialized in this folder. Dev server runs on the Mac and on the Pi.
 
 From requirements and the hand-off pack (CN-12):
@@ -33,10 +33,10 @@ From requirements and the hand-off pack (CN-12):
 - [x] Confirm the stack in `AGENTS.md` (Node LTS with TypeScript, `ws`, Vite with React for guest and admin, DOM SVG) and record it in `docs/decisions.md` (approved 2026-09-18, decision D-28)
 - [ ] Choose the pad service language (`mido` with `python-rtmidi`, or `easymidi`) by seeing which installs cleanly on the Pi
 - [x] Review every `PROPOSED` item in `docs/contracts.md`; fix or approve each and update the file (all 19 approved 2026-09-18, decision D-26)
-- [ ] Choose how code gets to the Pi (for example, the built files copied over SSH, or a bare git repo on the Pi) and record it in `docs/decisions.md`. Nothing is pushed to any remote without asking.
+- [x] Choose how code gets to the Pi (for example, the built files copied over SSH, or a bare git repo on the Pi) and record it in `docs/decisions.md`. Nothing is pushed to any remote without asking.
 - [ ] Deploy script and health-check script in `scripts/`, tested Mac to Pi
 - [ ] Fill in `AGENTS.md` "How to run and test" and `docs/runbooks/pi-setup.md` with commands that actually worked; clear the `UNVERIFIED` labels only for those
-- [ ] Set the on-stage cap default from the spike and record it in `docs/decisions.md`
+- [x] Set the on-stage cap default from the spike and record it in `docs/decisions.md` (30, D-31)
 
 ## Out of scope
 - Any real character art, animation clips, or rig (Phase 1).
