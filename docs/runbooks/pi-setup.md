@@ -8,7 +8,7 @@ Ask Justin before changing the network, buying anything, or wiping anything.
 |---|---|---|---|
 | 0a | microSD flashed with Raspberry Pi OS (64-bit, standard image with desktop) using Raspberry Pi Imager. Imager settings: hostname, user account, SSH on, locale and time zone, Wi-Fi (entered in the Imager, never in git). Recommendation, not yet tried on this Pi. | VERIFIED 2026-09-18 | On the Pi: `hostname` gives `hello-party`; `PRETTY_NAME="Debian GNU/Linux 13 (trixie)"`; `uname -m` gives `aarch64`. |
 | 0b | First boot works: the Pi boots to the desktop on the TV and is reachable by SSH from the Mac | VERIFIED 2026-09-18 | TV shows the desktop (Justin). `ssh jprince@hello-party.local` works from the Mac. `pgrep -a labwc` gives `1316 /usr/bin/labwc -m`. |
-| 1 | OS updated | UNVERIFIED | |
+| 1 | OS updated | VERIFIED 2026-09-18 | `apt list --upgradable` (piped to `wc -l`, header line removed) gives `0`; rebooted afterwards, kernel `6.18.50+rpt-rpi-2712`, `throttled=0x0`. |
 | 2 | Node LTS installed (version recorded) | VERIFIED 2026-09-18 | `node -v` gives `v24.21.0`; `npm -v` gives `11.19.0`; `/usr/bin/node` from the apt package `nodejs`. NodeSource apt source is `https://deb.nodesource.com/node_24.x`, so `apt upgrade` stays on Node 24. |
 | 3 | Static IP set (address recorded, with Justin's approval) | UNVERIFIED | |
 | 4 | Repo cloned on the Pi; `.env` created from `.env.example` | UNVERIFIED | Clone exists at `~/hello-party`: `git status -sb` clean on `phase-0-foundations`, HEAD `8c893a5` (matches the Mac). `.env` not created yet. |
