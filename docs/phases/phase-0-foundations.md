@@ -82,7 +82,7 @@ From requirements and the hand-off pack (CN-12):
 
 ## End-of-phase checklist
 - [x] `PROGRESS.md` updated (status, Now/Next/Blocked, Needs Justin, session log)
-- [ ] Boxes above ticked
+- [x] Boxes above ticked (three stay open and are carried forward; see PROGRESS.md: cardstock and the hardware-order box, and the Pi kiosk item for screen blanking and the real display URL)
 - [x] Decisions logged (stack, rendering choice, on-stage cap, pad service language)
-- [ ] Merged to `main` with `--no-ff`
-- [ ] Tagged `phase-0-done`
+- [x] Merged to `main` with `--no-ff` (`f9aa938`)
+- [x] Tagged `phase-0-done`

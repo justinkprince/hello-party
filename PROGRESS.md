@@ -1,14 +1,14 @@
 # PROGRESS
 
 Last updated: 2026-09-20 by the Phase 0 agent (Claude, file access only; Justin ran the commands)
-Current phase: Phase 0, gate met on 2026-09-20; merge to `main` and tag `phase-0-done` wait for Justin's OK.
-Schedule: BEHIND by about 2 days. On Sun 9/20 Phase 0 is still not tagged; Phase 1 was planned for Sat 9/19 and Phase 2 for Sun 9/20. Justin decided on Sun 9/20 to absorb it, with no limit on hours. Nothing cut.
+Current phase: Phase 0 done (tag `phase-0-done`, 2026-09-20). Next: Phase 1 (Characters).
+Schedule: BEHIND by about 2 days. Phase 0 was tagged only on Sun 9/20; Phase 1 was planned for Sat 9/19 and Phase 2 for Sun 9/20. Justin decided on Sun 9/20 to absorb it, with no limit on hours. Nothing cut.
 
 ## Phase status
 | Phase | Planned | Status | Branch | Tag | Gate result |
 |---|---|---|---|---|---|
 | Docs pack | Day 1, Fri 9/18 | Done | `main` | `docs-pack-done` | Files written and cross-checked by reading. Git commits and the tag are created by Justin (see Needs Justin). |
-| 0 Foundations | Day 1, Fri 9/18 | Gate met 2026-09-20; merge and tag pending Justin's OK | `phase-0-foundations` (on origin up to `294d45e`) | `phase-0-done` | Met on the Pi. Evidence in "Phase 0 gate evidence" below. Carried forward: see Known issues. |
+| 0 Foundations | Day 1, Fri 9/18 | Done 2026-09-20 | `phase-0-foundations`, merged to `main` (`f9aa938`) | `phase-0-done` | Met on the Pi. Evidence in "Phase 0 gate evidence" below. Carried forward: see Known issues. |
 | 1 Characters | Day 2, Sat 9/19 | Not started | `phase-1-characters` | `phase-1-done` | |
 | 2 Server and Character mode | Day 3, Sun 9/20 | Not started | `phase-2-server-and-character-mode` | `phase-2-done` | |
 | 3 Scene engine | Day 4, Mon 9/21 | Not started | `phase-3-scene-engine` | `phase-3-done` | |
@@ -17,19 +17,20 @@ Schedule: BEHIND by about 2 days. On Sun 9/20 Phase 0 is still not tagged; Phase
 | 6 Polish and hardening | Days 7-8, Thu 9/24 to Fri 9/25 | Not started | `phase-6-polish-and-hardening` | `phase-6-done` | |
 
 ## Now / Next / Blocked
-- **Now:** Phase 0 gate met (evidence below). Waiting for Justin's OK to commit, merge to `main` with `--no-ff`, and tag `phase-0-done`; then deploy the tag to the Pi (pushing needs Justin's OK). Details in `docs/runbooks/pi-setup.md`.
-- **Next:** Phase 1 (Characters) on `phase-1-characters` once `phase-0-done` exists. Also check the MIDI pad on the Pi when it arrives (runbook step 8); it does not block the tag.
+- **Now:** Phase 0 is done: merged to `main` with `--no-ff`, tagged `phase-0-done` (`f9aa938`), pushed, and the tag is running on the Pi. Details in `docs/runbooks/pi-setup.md`.
+- **Next:** Phase 1 (Characters) on `phase-1-characters`. Also check the MIDI pad on the Pi when it arrives (runbook step 8).
 - **Blocked:** nothing. Every command is run by Justin (the agent so far has had file access only); guest URLs and QR codes must use the IP, not `hello-party.local`.
 
 ## Phase 0 gate evidence (2026-09-20)
 - **Spike and rendering choice:** DOM SVG, one `<svg>` per character, with a canvas overlay for effects (D-31). Pi 5, Chromium kiosk, 1920x1080, 26-node placeholder characters, 300 particles, 60 s runs: 30 characters averaged 59.9 and 60 fps (p99 16.8 ms); 38 characters 58.6 fps; 45 characters 50.4 fps; 60 characters 32.6 fps. 30 characters with 1200 particles: 59.8 fps (p99 17.3 ms). `get_throttled` `0x0`, 59.8 C at the end. On-stage cap 30. Full numbers in `docs/runbooks/pi-setup.md`.
 - **Dev server on the Mac and the Pi:** on the Mac, `npm run dev` and `npm run typecheck` in `web/display/` worked (per Justin). On the Pi, `npm run preview` served the page, and the health check reached it from the Mac.
 - **Audio:** Pi to TV over HDMI verified on the dev TV's own speakers; it survived a reboot, an HDMI replug, and a power pull. The soundbar was not tested (target TV not available). Fallback: the TV's own speakers (D-32).
-- **Deploy and health check, Mac to Pi:** `bash scripts/deploy.sh phase-0-foundations` left the Pi detached at `294d45e` (`npm ci` 17 packages, build 64 ms, 2.4 s in total). `HEALTH_URL=http://192.168.1.203:4173/ bash scripts/health-check.sh` printed FAIL (exit 1) with nothing listening and `OK ... answered 200` (exit 0) with `npm run preview` running on the Pi. `/api/health` is untested until Phase 2; deploying a tag is untested until `phase-0-done` exists.
+- **Deploy and health check, Mac to Pi:** `bash scripts/deploy.sh phase-0-foundations` left the Pi detached at `294d45e` (`npm ci` 17 packages, build 64 ms, 2.4 s in total). `HEALTH_URL=http://192.168.1.203:4173/ bash scripts/health-check.sh` printed FAIL (exit 1) with nothing listening and `OK ... answered 200` (exit 0) with `npm run preview` running on the Pi. `/api/health` is untested until Phase 2.
+- **Tag deployed to the Pi:** `bash scripts/deploy.sh phase-0-done` left the Pi detached at `f9aa938` (`phase-0-done`; `npm ci` 17 packages, build 53 ms). With `npm run preview` started on the Pi afterwards, the health check printed `OK ... answered 200` (exit 0). Justin pushed `main`, `phase-0-foundations`, and the tag. The tag is `f9aa938`; a docs-only commit after it records this status.
 
 ## Needs Justin
 - [x] Slip: absorb it, no limit on hours (Justin, Sun 9/20)
-- [ ] Say OK to merge to `main` and tag `phase-0-done`, and OK to push `main`, the branch, and the tag so the tag can be deployed to the Pi (Sun 9/20)
+- [x] OK to merge, tag, push, and deploy the tag to the Pi (Justin, Sun 9/20)
 - [ ] Test the soundbar on the target TV when you have access (fallback: the TV's own speakers, D-32)
 - [ ] When the pad arrives (expected Sun 9/20): plug it into the Pi and check it (runbook step 8)
 - [ ] Target TV settings: game mode, auto power-off and screensaver off, HDMI-CEC checked, brightness high (see the runbook)
@@ -52,7 +53,7 @@ Schedule: BEHIND by about 2 days. On Sun 9/20 Phase 0 is still not tagged; Phase
 - Screen blanking over time not observed (D-1). No `swayidle` is running, but `raspi-config nonint get_blanking` printed `1`, which does not confirm it. Phase 6.
 - The kiosk autostart was verified with a test page. Point it at the real display URL when the server exists. Phase 2.
 - `.env` is not created on the Pi. Phase 2, when the server exists.
-- Untested: `/api/health` (Phase 2), deploying a tag, the deploy refusal on local changes on the Pi, and deploying to a Pi without internet.
+- Untested: `/api/health` (Phase 2), the deploy refusal on local changes on the Pi, and deploying to a Pi without internet.
 - The MIDI pad is untested. `easymidi` only listed `Midi Through` on the Pi (D-33). Runbook step 8 when the pad arrives.
 
 ## Session log
@@ -61,7 +62,7 @@ Newest first. At most 5 lines per entry.
 - **2026-09-20, Phase 0 agent (Claude, file access only; Justin ran every command).** Wrote `scripts/deploy.sh` and `scripts/health-check.sh` (D-34) and tested them Mac to Pi: deploying `phase-0-foundations` left the Pi at `294d45e`; the health check printed FAIL, then OK, against the preview server on port 4173.
   Filled in "How to run and test" in `AGENTS.md` and `pi-setup.md` rows 4, 10, 11 with commands that ran. `.env.example` now has blank Pi placeholders.
   Gate: met (evidence above). Carried forward: screen blanking over time, real kiosk URL, soundbar, cardstock, pad check, Pi `.env`.
-  Next: Justin commits and gives the OK to merge and tag; deploy the tag to the Pi; pad check when the pad arrives; then Phase 1.
+  Next: pad check when the pad arrives; then Phase 1. Merged with `--no-ff` (`f9aa938`), tagged `phase-0-done`, pushed, and deployed the tag to the Pi.
 
 - **2026-09-19 to 09-20, Phase 0 agent (Claude, file access only; Justin ran every command).** Pi verified: Trixie, Node 24.21.0, spike at 30 characters 60 fps (cap 30, D-31), HDMI audio to the dev TV (soundbar carried forward, D-32), kiosk autostart, HDMI replug, power pull, static IP, `easymidi` (D-33).
   Found: one character per kid (D-30); QR codes must use the IP, not `.local` (Android does not resolve it).
