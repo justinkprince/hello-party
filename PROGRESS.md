@@ -9,7 +9,7 @@ Schedule: BEHIND by about 2 days. Phase 0 was tagged only on Sun 9/20; Phase 1 w
 |---|---|---|---|---|---|
 | Docs pack | Day 1, Fri 9/18 | Done | `main` | `docs-pack-done` | Files written and cross-checked by reading. Git commits and the tag are created by Justin (see Needs Justin). |
 | 0 Foundations | Day 1, Fri 9/18 | Done 2026-09-20 | `phase-0-foundations`, merged to `main` (`f9aa938`) | `phase-0-done` | Met on the Pi. Evidence in "Phase 0 gate evidence" below. Carried forward: see Known issues. |
-| 1 Characters | Day 2, Sat 9/19 | Not started | `phase-1-characters` | `phase-1-done` | |
+| 1 Characters | Day 2, Sat 9/19 | Not started (rig approved, D-35) | `phase-1-characters` | `phase-1-done` | |
 | 2 Server and Character mode | Day 3, Sun 9/20 | Not started | `phase-2-server-and-character-mode` | `phase-2-done` | |
 | 3 Scene engine | Day 4, Mon 9/21 | Not started | `phase-3-scene-engine` | `phase-3-done` | |
 | 4 Actions | Day 5, Tue 9/22 | Not started | `phase-4-actions` | `phase-4-done` | |
@@ -17,8 +17,8 @@ Schedule: BEHIND by about 2 days. Phase 0 was tagged only on Sun 9/20; Phase 1 w
 | 6 Polish and hardening | Days 7-8, Thu 9/24 to Fri 9/25 | Not started | `phase-6-polish-and-hardening` | `phase-6-done` | |
 
 ## Now / Next / Blocked
-- **Now:** Phase 0 is done: merged to `main` with `--no-ff`, tagged `phase-0-done` (`f9aa938`), pushed, and the tag is running on the Pi. Details in `docs/runbooks/pi-setup.md`.
-- **Next:** Phase 1 (Characters) on `phase-1-characters`. Also check the MIDI pad on the Pi when it arrives (runbook step 8).
+- **Now:** Phase 0 is done: merged to `main` with `--no-ff`, tagged `phase-0-done` (`f9aa938`), pushed, and the tag is running on the Pi. Phase 1 has not started. The rig is approved (D-35), and the empty branch `phase-1-characters` exists locally. Details in `docs/runbooks/pi-setup.md`.
+- **Next:** Phase 1 (Characters) on `phase-1-characters`, done by a new agent in a new session with the kickoff prompt. Also check the MIDI pad on the Pi when it arrives (runbook step 8); it had not arrived on Sun 9/20.
 - **Blocked:** nothing. Every command is run by Justin (the agent so far has had file access only); guest URLs and QR codes must use the IP, not `hello-party.local`.
 
 ## Phase 0 gate evidence (2026-09-20)
@@ -58,6 +58,11 @@ Schedule: BEHIND by about 2 days. Phase 0 was tagged only on Sun 9/20; Phase 1 w
 
 ## Session log
 Newest first. At most 5 lines per entry.
+
+- **2026-09-20 (later), Phase 0 agent (Claude, file access only; Justin ran every command).** Phase 0 merged, tagged `phase-0-done`, deployed to the Pi, and `main` pushed. Read the Phase 1 docs and proposed the rig; Justin approved it (D-35).
+  No Phase 1 files were written: each phase starts with a new agent in a new session (rule added to `AGENTS.md`). Justin created the empty branch `phase-1-characters`.
+  The MIDI pad had not arrived.
+  Next: a new agent starts Phase 1 with the kickoff prompt; pad check when the pad arrives.
 
 - **2026-09-20, Phase 0 agent (Claude, file access only; Justin ran every command).** Wrote `scripts/deploy.sh` and `scripts/health-check.sh` (D-34) and tested them Mac to Pi: deploying `phase-0-foundations` left the Pi at `294d45e`; the health check printed FAIL, then OK, against the preview server on port 4173.
   Filled in "How to run and test" in `AGENTS.md` and `pi-setup.md` rows 4, 10, 11 with commands that ran. `.env.example` now has blank Pi placeholders.

@@ -73,6 +73,7 @@ Deploy and health check, run on the Mac from the repo root. They need `PI_HOST` 
 - Never push, force-push, or rewrite history without asking.
 
 ## Session start ritual
+Each phase starts with a new agent in a new session. When you finish a phase, stop and hand off; do not start the next phase, even if it looks unblocked. Justin starts it with the kickoff prompt.
 1. Read `AGENTS.md`, `PROGRESS.md`, and the phase doc.
 2. Run `git status`; check the branch and the latest tag.
 3. Run the app locally. From Phase 1 onward, also confirm the Pi still runs the last tag.
