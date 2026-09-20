@@ -23,8 +23,8 @@ Day 1 tasks:
 - [x] Review `docs/requirements.md` and confirm the open items at the end of it (answered 2026-09-18, D-27 and D-23; the on-stage cap waits for the spike and the cooldown tuning for the rehearsal)
 - [ ] Order hardware (the list above)
 - [x] microSD flashed with Raspberry Pi OS (Justin does this; see `docs/runbooks/pi-setup.md` steps 0a and 0b) and the Pi boots to the desktop on the TV with SSH reachable from the Mac
-- [ ] Pi: OS updated, Node installed, Chromium kiosk auto-start, static IP
-- [ ] Test audio: Pi to TV to soundbar over HDMI
+- [ ] Pi: OS updated, Node installed, Chromium kiosk auto-start, static IP (done except: watch that the screen never blanks, and switch the kiosk to the real display URL once Phase 2 exists)
+- [x] Test audio: Pi to TV to soundbar over HDMI (verified to the dev TV's own speakers; soundbar carried forward as a known risk, D-32)
 - [x] Performance spike on the Pi: 30 simple animated SVG characters at 1080p, one `<svg>` per character. Also try a canvas overlay with a few hundred particles (the effects layer). Record the frame rate.
 - [x] Repo initialized in this folder. Dev server runs on the Mac and on the Pi. (Mac: `npm run dev` and `npm run typecheck` in `web/display/` worked, per Justin; Pi: `npm run preview` served the spike page.)
 
@@ -34,8 +34,8 @@ From requirements and the hand-off pack (CN-12):
 - [x] Choose the pad service language (`mido` with `python-rtmidi`, or `easymidi`) by seeing which installs cleanly on the Pi (`easymidi`, D-33)
 - [x] Review every `PROPOSED` item in `docs/contracts.md`; fix or approve each and update the file (all 19 approved 2026-09-18, decision D-26)
 - [x] Choose how code gets to the Pi (for example, the built files copied over SSH, or a bare git repo on the Pi) and record it in `docs/decisions.md`. Nothing is pushed to any remote without asking.
-- [ ] Deploy script and health-check script in `scripts/`, tested Mac to Pi
-- [ ] Fill in `AGENTS.md` "How to run and test" and `docs/runbooks/pi-setup.md` with commands that actually worked; clear the `UNVERIFIED` labels only for those
+- [x] Deploy script and health-check script in `scripts/`, tested Mac to Pi (2026-09-20, D-34; the health check was tested against the preview server, since `/api/health` needs Phase 2)
+- [x] Fill in `AGENTS.md` "How to run and test" and `docs/runbooks/pi-setup.md` with commands that actually worked; clear the `UNVERIFIED` labels only for those
 - [x] Set the on-stage cap default from the spike and record it in `docs/decisions.md` (30, D-31)
 
 ## Out of scope
@@ -81,8 +81,8 @@ From requirements and the hand-off pack (CN-12):
 - Deliberately unfinished: art, rig, server logic, and service hardening.
 
 ## End-of-phase checklist
-- [ ] `PROGRESS.md` updated (status, Now/Next/Blocked, Needs Justin, session log)
+- [x] `PROGRESS.md` updated (status, Now/Next/Blocked, Needs Justin, session log)
 - [ ] Boxes above ticked
-- [ ] Decisions logged (stack, rendering choice, on-stage cap, pad service language)
+- [x] Decisions logged (stack, rendering choice, on-stage cap, pad service language)
 - [ ] Merged to `main` with `--no-ff`
 - [ ] Tagged `phase-0-done`
