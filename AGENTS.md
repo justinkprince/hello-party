@@ -16,12 +16,15 @@
 - Two admins (Justin and his wife) run scenes and moderation, and use focus mode to keep attention on the birthday girl.
 - Everything runs on a Raspberry Pi 5 over home Wi-Fi. Develop on a Mac, deploy to the Pi. Justin owns scope.
 
+## Easy to get wrong
+- **One character per kid.** Every kid has exactly one character, never more. A phone can hold up to 3 characters only because one parent may have up to 3 kids, each with their own character. The shared tablet holds many kids, one character each. So the number of characters is about the number of kids, not a multiple of it. Size caps, tests, and bots on that basis. (Decision D-30; requirements G-3, G-6, C-3.)
+
 ## Stack (approved 2026-09-18, decision D-28)
 - Node.js LTS with TypeScript; `ws` for WebSocket. Record the exact Node version in `docs/runbooks/pi-setup.md` when the Pi is set up.
 - Vite for the three web apps: React for the guest and admin apps, plain TypeScript for the display. Keep the WebSocket connection and app state in a small store outside the React components, so re-renders never open a second connection.
 - Characters as DOM SVG with CSS transforms, one `<svg>` per character inside a positioned wrapper. Effects (confetti, fireworks, stars) go on one canvas overlay unless the Phase 0 spike shows DOM effects are fine. If the spike stutters, fall back to canvas or PixiJS for characters.
 - Characters and guests stored as JSON files on disk.
-- Pad service reads MIDI on the Pi: Python `mido` with `python-rtmidi`, or Node `easymidi`, whichever installs cleanly (decide in Phase 0).
+- Pad service reads MIDI on the Pi with Node `easymidi` (decision D-33; `mido` with `python-rtmidi` failed to install on the Pi and stays only as a fallback).
 - systemd services on the Pi; a Chromium kiosk for the TV.
 
 ## Repo layout (planned; Phase 0 creates the folders)
@@ -40,7 +43,17 @@
 | `tests/` | Tests, spam test | Phase 0 onward |
 
 ## How to run and test
-TBD: Phase 0 fills this in with verified commands.
+Only commands that have been run are listed. Where and when each was verified is in `docs/runbooks/pi-setup.md`. Nothing exists yet for the server, the pad service, or tests (Phase 2 onward); add their commands as those phases verify them.
+
+Mac, from `web/display/` (worked, per Justin):
+- `npm run dev` starts the dev server. `npm run typecheck` runs `tsc --noEmit`.
+
+Pi, from `~/hello-party/web/display/` over SSH (verified 2026-09-20):
+- `npm run preview` serves the built page on port 4173 and listens on the network (`host: true` in `vite.config.ts`). Stop it with Ctrl+C.
+
+Deploy and health check, run on the Mac from the repo root. They need `PI_HOST` and `PI_USER` in `.env` or the environment (see `.env.example`):
+- `bash scripts/deploy.sh <tag-or-branch>` checks the ref out on the Pi (detached) and runs `npm ci` and `npm run build` in each app folder. The ref must already be on GitHub. It restarts nothing: stop any running server first and start it again by hand. Example: `bash scripts/deploy.sh phase-0-foundations`.
+- `bash scripts/health-check.sh` prints `OK` (exit 0) or `FAIL` (exit 1). Its default URL is `http://$PI_HOST:$PORT/api/health`, which does not exist until Phase 2. Until then, with the preview server running on the Pi: `HEALTH_URL=http://192.168.1.203:4173/ bash scripts/health-check.sh`.
 
 ## Rules
 1. One phase at a time, one agent at a time, never in parallel.
