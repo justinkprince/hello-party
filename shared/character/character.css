@@ -1,0 +1,137 @@
+/* Character look and the v1 clips: idle, walk, wave, dance A, jump.
+   Decisions: D-35 (rig), D-37 (parts), D-38 (clips), D-43 (outline). UNVERIFIED until run on the Mac and the Pi.
+   The pivot origins (transform-origin on .l-<layer>) are generated from rig.ts (pivotCss), so they live in one place.
+   Clips move only rig groups, never single shapes. Rotation is clockwise-positive: for the left arm and leg
+   (screen left) a positive angle swings outward; for the right side a negative angle swings outward. */
+
+.ch {
+  --skin: #c68642;
+  --hair: #5a3a22;
+  --bow: #e60012;
+  --outfit: #4a90d9;
+  position: relative;
+  display: inline-block;
+  width: var(--ch-w, 140px);
+  aspect-ratio: 100 / 140;
+}
+.ch > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.ch .g {
+  transform-box: view-box;
+}
+
+/* Colors from the four variables, and the outline rule (D-43). */
+.ch .c-skin { fill: var(--skin); }
+.ch .c-hair { fill: var(--hair); }
+.ch .c-bow { fill: var(--bow); }
+.ch .c-outfit { fill: var(--outfit); }
+.ch .ol {
+  stroke: #3a2a2a;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* ---------- idle (loop) ---------- */
+.ch[data-clip="idle"] .l-root { animation: ch-idle-bob 1.6s ease-in-out infinite alternate; }
+.ch[data-clip="idle"] .l-head { animation: ch-idle-tilt 2.4s ease-in-out infinite alternate; }
+.ch[data-clip="idle"] .l-arm_l { animation: ch-idle-sway 2s ease-in-out infinite alternate; }
+.ch[data-clip="idle"] .l-arm_r { animation: ch-idle-sway 2s ease-in-out infinite alternate-reverse; }
+@keyframes ch-idle-bob { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
+@keyframes ch-idle-tilt { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+@keyframes ch-idle-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+
+/* ---------- walk (loop; the display moves the wrapper, this only animates the limbs) ---------- */
+.ch[data-clip="walk"] .l-root { animation: ch-walk-bob 0.175s ease-in-out infinite alternate; }
+.ch[data-clip="walk"] .l-head { animation: ch-walk-tilt 0.35s ease-in-out infinite alternate; }
+.ch[data-clip="walk"] .l-leg_l { animation: ch-walk-leg 0.35s ease-in-out infinite alternate; }
+.ch[data-clip="walk"] .l-leg_r { animation: ch-walk-leg 0.35s ease-in-out infinite alternate-reverse; }
+.ch[data-clip="walk"] .l-arm_l { animation: ch-walk-arm 0.35s ease-in-out infinite alternate-reverse; }
+.ch[data-clip="walk"] .l-arm_r { animation: ch-walk-arm 0.35s ease-in-out infinite alternate; }
+@keyframes ch-walk-bob { from { transform: translateY(0); } to { transform: translateY(-2px); } }
+@keyframes ch-walk-tilt { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
+@keyframes ch-walk-leg { from { transform: rotate(-22deg); } to { transform: rotate(22deg); } }
+@keyframes ch-walk-arm { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+
+/* ---------- dance A (loop) ---------- */
+.ch[data-clip="dance_a"] .l-root { animation: ch-dance-bounce 0.4s ease-in-out infinite alternate; }
+.ch[data-clip="dance_a"] .l-head { animation: ch-dance-head 0.8s ease-in-out infinite alternate; }
+.ch[data-clip="dance_a"] .l-arm_l { animation: ch-dance-arm-l 0.4s ease-in-out infinite alternate; }
+.ch[data-clip="dance_a"] .l-arm_r { animation: ch-dance-arm-r 0.4s ease-in-out infinite alternate-reverse; }
+.ch[data-clip="dance_a"] .l-leg_l { animation: ch-dance-leg 0.4s ease-in-out infinite alternate; }
+.ch[data-clip="dance_a"] .l-leg_r { animation: ch-dance-leg 0.4s ease-in-out infinite alternate-reverse; }
+@keyframes ch-dance-bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+@keyframes ch-dance-head { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+@keyframes ch-dance-arm-l { from { transform: rotate(30deg); } to { transform: rotate(150deg); } }
+@keyframes ch-dance-arm-r { from { transform: rotate(-30deg); } to { transform: rotate(-150deg); } }
+@keyframes ch-dance-leg { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+
+/* Loop clips: spread the start of each character with the per-character --d (negative) delay.
+   This comes after the shorthand rules above, with the same specificity, so it wins. */
+.ch[data-clip="idle"] .g,
+.ch[data-clip="walk"] .g,
+.ch[data-clip="dance_a"] .g {
+  animation-delay: var(--d, 0s);
+}
+
+/* ---------- wave (one-shot, 1.8 s; ends on ch-wave-arm) ---------- */
+.ch[data-clip="wave"] .l-arm_r { animation: ch-wave-arm 1.8s ease-in-out 1 both; }
+.ch[data-clip="wave"] .l-head { animation: ch-wave-head 1.8s ease-in-out 1 both; }
+@keyframes ch-wave-arm {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-150deg); }
+  30% { transform: rotate(-170deg); }
+  45% { transform: rotate(-140deg); }
+  60% { transform: rotate(-170deg); }
+  75% { transform: rotate(-140deg); }
+  90% { transform: rotate(-150deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes ch-wave-head {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(4deg); }
+  85% { transform: rotate(4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ---------- jump (one-shot, 0.8 s; ends on ch-jump-root) ---------- */
+.ch[data-clip="jump"] .l-root { animation: ch-jump-root 0.8s ease-in-out 1 both; }
+.ch[data-clip="jump"] .l-arm_l { animation: ch-jump-arm-l 0.8s ease-in-out 1 both; }
+.ch[data-clip="jump"] .l-arm_r { animation: ch-jump-arm-r 0.8s ease-in-out 1 both; }
+.ch[data-clip="jump"] .l-leg_l { animation: ch-jump-leg-l 0.8s ease-in-out 1 both; }
+.ch[data-clip="jump"] .l-leg_r { animation: ch-jump-leg-r 0.8s ease-in-out 1 both; }
+@keyframes ch-jump-root {
+  0% { transform: translateY(0) scale(1, 1); }
+  15% { transform: translateY(0) scale(1.06, 0.92); }
+  45% { transform: translateY(-26px) scale(0.96, 1.05); }
+  75% { transform: translateY(0) scale(1.06, 0.92); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@keyframes ch-jump-arm-l {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(15deg); }
+  45% { transform: rotate(150deg); }
+  75% { transform: rotate(20deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes ch-jump-arm-r {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-15deg); }
+  45% { transform: rotate(-150deg); }
+  75% { transform: rotate(-20deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes ch-jump-leg-l {
+  0% { transform: rotate(0deg); }
+  45% { transform: rotate(12deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes ch-jump-leg-r {
+  0% { transform: rotate(0deg); }
+  45% { transform: rotate(-12deg); }
+  100% { transform: rotate(0deg); }
+}

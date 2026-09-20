@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_short: hair_back sits behind the head, hair_front (the fringe) in front of the face. 2 nodes. -->
+<g id="hair_back">
+<ellipse class="c-hair ol" cx="50" cy="33" rx="34" ry="28"/>
+</g>
+<g id="hair_front">
+<path class="c-hair ol" d="M19.5 38C19 20 33 9 50 9C67 9 81 20 80.5 38C77 30 73 27 68 28Q62 30 57 26Q51 31 46 26Q40 30 34 27Q26 28 19.5 38Z"/>
+</g>
+</svg>

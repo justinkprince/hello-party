@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- Base body and head (D-35, D-39, D-43). The renderer picks each layer group out by id.
+     c-skin fills from the --skin variable; .ol is the dark outline; fixed colors are inline.
+     freckles and glasses are drawn only when the character's option is on. -->
+<g id="leg_l">
+<rect class="c-skin ol" x="32" y="100" width="13" height="24" rx="6"/>
+<rect class="ol" fill="#ffffff" x="29" y="122" width="19" height="9" rx="4"/>
+</g>
+<g id="leg_r">
+<rect class="c-skin ol" x="55" y="100" width="13" height="24" rx="6"/>
+<rect class="ol" fill="#ffffff" x="52" y="122" width="19" height="9" rx="4"/>
+</g>
+<g id="body">
+<rect class="c-skin ol" x="28" y="62" width="44" height="46" rx="14"/>
+</g>
+<g id="arm_l">
+<rect class="c-skin ol" x="13" y="68" width="13" height="30" rx="6.5"/>
+</g>
+<g id="arm_r">
+<rect class="c-skin ol" x="74" y="68" width="13" height="30" rx="6.5"/>
+</g>
+<g id="head_base">
+<ellipse class="c-skin ol" cx="50" cy="38" rx="31" ry="26"/>
+</g>
+<g id="freckles">
+<path fill="#7a3f1a" fill-opacity="0.55" d="M38.7 46a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M43.2 47.5a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M35.2 48.5a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M58.7 46a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M54.2 47.5a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M62.2 48.5a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0"/>
+</g>
+<g id="glasses">
+<path class="ol" fill="none" d="M31 40a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M53 40a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M47 40Q50 37 53 40"/>
+</g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- face_smile: dot eyes with a highlight, blush, and a smile. 4 nodes. -->
+<g id="face">
+<path fill="#1b1212" d="M35.5 40a3.5 4.5 0 1 0 7 0a3.5 4.5 0 1 0 -7 0M57.5 40a3.5 4.5 0 1 0 7 0a3.5 4.5 0 1 0 -7 0"/>
+<path fill="#ffffff" d="M39.3 38.4a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0M61.3 38.4a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0 -2.6 0"/>
+<path fill="#ff4d7d" fill-opacity="0.4" d="M25 48a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0M66.6 48a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0"/>
+<path fill="none" stroke="#1b1212" stroke-width="2.2" stroke-linecap="round" d="M43 50Q50 57 57 50"/>
+</g>
+</svg>

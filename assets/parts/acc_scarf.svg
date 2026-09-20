@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- acc_scarf: a yellow scarf at neck level with a tail on the chest. Accessories have fixed colors. 2 nodes. -->
+<g id="accessory">
+<path class="ol" fill="#ffd23f" d="M27 63Q50 73 73 63L74 71Q50 81 26 71Z"/>
+<path class="ol" fill="#ffd23f" d="M57 74L68 74L70 94L59 94Z"/>
+</g>
+</svg>

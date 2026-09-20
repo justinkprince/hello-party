@@ -1,0 +1,19 @@
+{
+  "id": "c_sample",
+  "ownerId": "g_sample",
+  "name": "Sample",
+  "parts": {
+    "ears": "ears_cat",
+    "bow": "bow_big",
+    "hair": "hair_short",
+    "face": "face_smile",
+    "outfit": "outfit_dress",
+    "accessory": "acc_scarf"
+  },
+  "colors": { "skin": "#c68642", "hair": "#5a3a22", "bow": "#e60012", "outfit": "#4a90d9" },
+  "options": { "glasses": false, "freckles": false },
+  "personality": "bouncy",
+  "onStage": true,
+  "nameHidden": false,
+  "createdAt": 1790000000000
+}

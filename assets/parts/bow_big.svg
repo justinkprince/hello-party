@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- bow_big: a big bow at the upper right of the head, in --bow. Drawn last, so it sits over the ear and hair. 2 nodes. -->
+<g id="bow">
+<path class="c-bow ol" d="M70 20L54 11Q51 20 54 29ZM70 20L86 11Q89 20 86 29Z"/>
+<circle class="c-bow ol" cx="70" cy="20" r="4.5"/>
+</g>
+</svg>

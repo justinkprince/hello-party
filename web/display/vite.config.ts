@@ -4,6 +4,7 @@
 import { defineConfig, type Plugin } from 'vite';
 import { appendFileSync } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { fileURLToPath } from 'node:url';
 
 function spikeResults(): Plugin {
   const handler = (req: IncomingMessage, res: ServerResponse, next: () => void) => {
@@ -32,9 +33,19 @@ function spikeResults(): Plugin {
   };
 }
 
+// Phase 1 (D-36, D-42): the character code and parts live outside this folder (shared/, assets/), so the dev
+// server may read the repo root, and the build has a second page, gallery.html. UNVERIFIED until run.
 export default defineConfig({
   plugins: [spikeResults()],
   // host: true listens on the LAN so the Mac can open http://hello-party.local:PORT.
-  server: { host: true, allowedHosts: ['hello-party.local'] },
+  server: { host: true, allowedHosts: ['hello-party.local'], fs: { allow: ['../..'] } },
   preview: { host: true, allowedHosts: ['hello-party.local'] },
+  build: {
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        gallery: fileURLToPath(new URL('./gallery.html', import.meta.url)),
+      },
+    },
+  },
 });
