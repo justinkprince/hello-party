@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- outfit_star_tee: a t-shirt in --outfit with a fixed yellow star, over fixed dark shorts. The short sleeves are in
+     the arm groups, so they turn with the arms (D-50). 3 nodes in the outfit layer and 1 in each arm. -->
+<g id="outfit">
+<path class="ol" fill="#3d4f73" d="M29 96L71 96L72 112Q50 116 28 112Z"/>
+<path class="c-outfit ol" d="M27 66Q50 72 73 66L74 100Q50 105 26 100Z"/>
+<path fill="#ffd23f" stroke="#3a2a2a" stroke-width="1.2" stroke-linejoin="round" d="M50 76L52 81.25L57.6 81.5L53.2 85.05L54.7 90.5L50 87.4L45.3 90.5L46.8 85.05L42.4 81.5L48 81.25Z"/>
+</g>
+<g id="arm_l">
+<rect class="c-outfit ol" x="12" y="67" width="15" height="16" rx="4"/>
+</g>
+<g id="arm_r">
+<rect class="c-outfit ol" x="73" y="67" width="15" height="16" rx="4"/>
+</g>
+</svg>

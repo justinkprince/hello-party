@@ -3,7 +3,6 @@
   "ownerId": "g_sample",
   "name": "Sample",
   "parts": {
-    "ears": "ears_cat",
     "bow": "bow_big",
     "hair": "hair_short",
     "face": "face_smile",

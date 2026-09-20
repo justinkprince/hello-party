@@ -1,9 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
-<!-- hair_short: hair_back sits behind the head, hair_front (the fringe) in front of the face. 2 nodes. -->
-<g id="hair_back">
-<ellipse class="c-hair ol" cx="50" cy="33" rx="34" ry="28"/>
-</g>
+<!-- hair_short: one shape in front. Its outer edge is the outline of the whole hair (dome and sideburns), so no
+     second outline shows around the top. Bangs across the forehead. 1 node. -->
+<g id="hair_back"></g>
 <g id="hair_front">
-<path class="c-hair ol" d="M19.5 38C19 20 33 9 50 9C67 9 81 20 80.5 38C77 30 73 27 68 28Q62 30 57 26Q51 31 46 26Q40 30 34 27Q26 28 19.5 38Z"/>
+<path class="c-hair ol" d="M18 50C13 32 17 12 34 7Q50 3 66 7C83 12 87 32 82 50Q78 46 79 38Q78 30 68 28Q62 30 57 26Q51 31 46 26Q40 30 34 27Q24 30 21 38Q22 46 18 50Z"/>
 </g>
 </svg>

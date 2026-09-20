@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_puff: a big scalloped curly puff behind the head, and a scalloped curly hairline in front. 2 nodes. -->
+<g id="hair_back">
+<path class="c-hair ol" d="M14 48A9 9 0 0 1 11 32A10 10 0 0 1 19 17A10 10 0 0 1 34 8A9 9 0 0 1 50 5A9 9 0 0 1 66 8A10 10 0 0 1 81 17A10 10 0 0 1 89 32A9 9 0 0 1 86 48Q50 42 14 48Z"/>
+</g>
+<g id="hair_front">
+<path class="c-hair ol" d="M19.5 38C19 22 33 12 50 12C67 12 81 22 80.5 38A6 6 0 0 1 72 32A6 6 0 0 1 62 27A6 6 0 0 1 50 26A6 6 0 0 1 38 27A6 6 0 0 1 28 32A6 6 0 0 1 19.5 38Z"/>
+</g>
+</svg>

@@ -1,6 +1,6 @@
 // Character JSON types. Mirrors docs/contracts.md section 5.1. Change both together (contracts.md section 8).
 
-export type Slot = 'ears' | 'bow' | 'hair' | 'face' | 'outfit' | 'accessory';
+export type Slot = 'bow' | 'hair' | 'face' | 'outfit' | 'accessory';
 
 /** Part ids (D-44), for example "hair_short". Every slot is always present; "none" is a real part. */
 export type CharacterParts = Record<Slot, string>;

@@ -8,8 +8,8 @@ Active design guidance, extracted and tightened from the original planning notes
 |---|---|
 | Characters are data | JSON (parts, colors, name, personality), never images. Stored on the Pi. Format in `contracts.md`. |
 | One shared rig | All parts are drawn on the same canvas with named layers and pivot points. Any combination of parts works with any clip, and each clip is written once for all characters. |
-| Layers and pivots | Named layers such as body, head, ears, hair, face, bow, outfit, accessory, arms, legs. Each has a pivot for rotation. Define them in Phase 1 and do not change them later without updating every clip. |
-| Art scope | About 35 parts in total (ears, bows/hats, hair, outfits, accessories, held items). The main cost is drawing, not code. Fewer parts with more color variation beats more parts. |
+| Layers and pivots | Named layers such as body, head, hair, face, bow, outfit, accessory, arms, legs. Each has a pivot for rotation. Define them in Phase 1 and do not change them later without updating every clip. |
+| Art scope | About 35 parts in total (bows/hats, hair, faces, outfits, accessories, held items). The main cost is drawing, not code. Fewer parts with more color variation beats more parts. |
 | Color variables | Parts use CSS variables (skin, hair, bow, outfit) so one drawing gives many looks. |
 | Clips | About 12: idle, walk, dance (2 to 3 variants), wave, jump, cheer, laugh, clap, sleep, spin. |
 | Style | Bold, high-contrast, readable on a TV in bright daylight. Original Kitty-inspired art only. |

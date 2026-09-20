@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- outfit_overalls: shortalls in --outfit over a fixed white shirt, with straps and two fixed yellow buttons.
+     The shirt's short sleeves are in the arm groups, so they turn with the arms (D-50). 4 nodes in the outfit
+     layer and 1 in each arm. -->
+<g id="outfit">
+<path class="ol" fill="#ffffff" d="M27 66Q50 72 73 66L74 92L26 92Z"/>
+<path class="c-outfit ol" d="M34 72L66 72L66 88L74 88L74 112Q50 116 26 112L26 88L34 88Z"/>
+<path class="c-outfit ol" d="M35 72L41 72L38 62L32 62ZM59 72L65 72L68 62L62 62Z"/>
+<path fill="#ffd23f" d="M36.4 76a1.8 1.8 0 1 0 3.6 0a1.8 1.8 0 1 0 -3.6 0M60 76a1.8 1.8 0 1 0 3.6 0a1.8 1.8 0 1 0 -3.6 0"/>
+</g>
+<g id="arm_l">
+<rect class="ol" fill="#ffffff" x="12" y="66" width="15" height="15" rx="4"/>
+</g>
+<g id="arm_r">
+<rect class="ol" fill="#ffffff" x="73" y="66" width="15" height="15" rx="4"/>
+</g>
+</svg>

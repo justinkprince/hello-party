@@ -45,17 +45,41 @@
 @keyframes ch-idle-tilt { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
 @keyframes ch-idle-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
 
-/* ---------- walk (loop; the display moves the wrapper, this only animates the limbs) ---------- */
+/* ---------- walk (loop; the display moves the wrapper, this only animates the limbs) ----------
+   A march (D-46): the legs take turns lifting with a small outward kick and never swing inward, so they cannot
+   cross. The arm on the side opposite the lifting leg swings out a little. One cycle is 0.7 s, two steps. */
 .ch[data-clip="walk"] .l-root { animation: ch-walk-bob 0.175s ease-in-out infinite alternate; }
 .ch[data-clip="walk"] .l-head { animation: ch-walk-tilt 0.35s ease-in-out infinite alternate; }
-.ch[data-clip="walk"] .l-leg_l { animation: ch-walk-leg 0.35s ease-in-out infinite alternate; }
-.ch[data-clip="walk"] .l-leg_r { animation: ch-walk-leg 0.35s ease-in-out infinite alternate-reverse; }
-.ch[data-clip="walk"] .l-arm_l { animation: ch-walk-arm 0.35s ease-in-out infinite alternate-reverse; }
-.ch[data-clip="walk"] .l-arm_r { animation: ch-walk-arm 0.35s ease-in-out infinite alternate; }
+.ch[data-clip="walk"] .l-leg_l { animation: ch-march-leg-l 0.7s ease-in-out infinite; }
+.ch[data-clip="walk"] .l-leg_r { animation: ch-march-leg-r 0.7s ease-in-out infinite; }
+.ch[data-clip="walk"] .l-arm_l { animation: ch-march-arm-l 0.7s ease-in-out infinite; }
+.ch[data-clip="walk"] .l-arm_r { animation: ch-march-arm-r 0.7s ease-in-out infinite; }
 @keyframes ch-walk-bob { from { transform: translateY(0); } to { transform: translateY(-2px); } }
 @keyframes ch-walk-tilt { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
-@keyframes ch-walk-leg { from { transform: rotate(-22deg); } to { transform: rotate(22deg); } }
-@keyframes ch-walk-arm { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+@keyframes ch-march-leg-l {
+  0% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(8deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes ch-march-leg-r {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(-5px) rotate(-8deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes ch-march-arm-l {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(12deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes ch-march-arm-r {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-12deg); }
+  50% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
 
 /* ---------- dance A (loop) ---------- */
 .ch[data-clip="dance_a"] .l-root { animation: ch-dance-bounce 0.4s ease-in-out infinite alternate; }

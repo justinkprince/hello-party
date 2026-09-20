@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- outfit_hoodie: a hoodie in --outfit (body, pocket, and the hood around the neck) over fixed dark shorts. The long
+     sleeves are in the arm groups, so they turn with the arms (D-50). 4 nodes in the outfit layer and 1 in each arm. -->
+<g id="outfit">
+<path class="ol" fill="#3d4f73" d="M29 100L71 100L72 114Q50 118 28 114Z"/>
+<path class="c-outfit ol" d="M27 66Q50 72 73 66L75 104Q50 110 25 104Z"/>
+<path class="c-outfit ol" d="M37 90L63 90L65 101L35 101Z"/>
+<path class="c-outfit ol" d="M30 65Q50 79 70 65L67 74Q50 86 33 74Z"/>
+</g>
+<g id="arm_l">
+<rect class="c-outfit ol" x="12" y="66" width="15" height="27" rx="5"/>
+</g>
+<g id="arm_r">
+<rect class="c-outfit ol" x="73" y="66" width="15" height="27" rx="5"/>
+</g>
+</svg>

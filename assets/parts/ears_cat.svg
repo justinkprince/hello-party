@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
-<!-- ears_cat: costume cat ears in --hair with pink insides. Drawn behind the hair. 2 nodes. -->
-<g id="ears">
-<path class="c-hair ol" d="M20 22L23 -5L45 10ZM80 22L77 -5L55 10Z"/>
-<path fill="#ffb3c7" d="M26 15L25.5 2L38 10ZM74 15L74.5 2L62 10Z"/>
-</g>
-</svg>

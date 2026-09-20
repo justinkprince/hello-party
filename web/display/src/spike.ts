@@ -1,10 +1,26 @@
-// Throwaway Phase 0 performance spike (D-9, O-1). UNVERIFIED until run on the Pi.
-// Measures: N animated DOM SVG characters (one <svg> each) + a canvas overlay of particles.
+// Frame rate test (decision D-42, option A). Started as the throwaway Phase 0 spike (D-9, O-1); Phase 1 swapped the
+// hand-drawn placeholder for the real renderer (shared/character), keeping the same measuring so the numbers compare.
+// UNVERIFIED until run on the Pi.
+// Measures: N animated DOM SVG characters (one <svg> each, real parts and clips) + a canvas overlay of particles.
 //
 // URL params (all optional):
 //   chars=30  particles=300  fx=1 (canvas on)  move=1 (JS movement on)
 //   seconds=60 (length of a run)  autorun=1 (start a run 5 s after load)
-// Keys: r run | [ ] characters -/+5 | - = particles -/+100 | p canvas | m movement | h hide panel
+//   clip=walk (idle | walk | wave | dance_a | jump; every character plays it)
+//   worst=1 (the heaviest looks, near the node ceiling; otherwise random looks, the same every time)
+// Keys: r run | [ ] characters -/+5 | - = particles -/+100 | p canvas | m movement | c next clip | l looks | h hide panel
+
+import {
+  CLIP_NAMES,
+  SLOTS,
+  createCharacter,
+  listParts,
+  skinFromSlider,
+  type CharacterLook,
+  type CharacterParts,
+  type CharacterView,
+  type ClipName,
+} from '../../../shared/character';
 
 const params = new URLSearchParams(location.search);
 const num = (key: string, fallback: number): number => {
@@ -15,8 +31,11 @@ const num = (key: string, fallback: number): number => {
 let particleCount = num('particles', 300);
 let fxOn = num('fx', 1) === 1;
 let moveOn = num('move', 1) === 1;
+let worstOn = num('worst', 0) === 1;
 const runSeconds = num('seconds', 60);
 const autorun = num('autorun', 0) === 1;
+const clipParam = params.get('clip') as ClipName | null;
+let clip: ClipName = clipParam && CLIP_NAMES.includes(clipParam) ? clipParam : 'walk';
 let hudHidden = false;
 
 const stage = document.getElementById('stage') as HTMLDivElement;
@@ -27,46 +46,47 @@ const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 // ---------- characters ----------
 
 const KIT_W = 140;
-const KIT_H = 196;
+const KIT_H = 196; // the character canvas is 100:140
 
-function kitSvg(hue: number): string {
-  const body = `hsl(${hue} 80% 65%)`;
-  const dark = `hsl(${hue} 70% 45%)`;
-  const line = 'stroke="#333" stroke-width="2"';
-  return `<svg viewBox="0 0 100 140" width="${KIT_W}" height="${KIT_H}" xmlns="http://www.w3.org/2000/svg">
-  <g class="bob">
-    <rect class="leg l" x="32" y="100" width="13" height="30" rx="6" fill="${dark}"/>
-    <rect class="leg r" x="55" y="100" width="13" height="30" rx="6" fill="${dark}"/>
-    <rect x="28" y="64" width="44" height="44" rx="14" fill="${body}"/>
-    <rect class="arm l" x="13" y="68" width="13" height="32" rx="6" fill="${body}"/>
-    <rect class="arm r" x="74" y="68" width="13" height="32" rx="6" fill="${body}"/>
-    <g class="head">
-      <path d="M22 22 L26 2 L44 14 Z" fill="#fff" ${line}/>
-      <path d="M78 22 L74 2 L56 14 Z" fill="#fff" ${line}/>
-      <ellipse cx="50" cy="38" rx="32" ry="26" fill="#fff" ${line}/>
-      <ellipse cx="38" cy="38" rx="3" ry="4" fill="#222"/>
-      <ellipse cx="62" cy="38" rx="3" ry="4" fill="#222"/>
-      <ellipse cx="50" cy="46" rx="4" ry="3" fill="#f6c21a"/>
-      <circle cx="30" cy="46" r="4" fill="#ffb3c7"/>
-      <circle cx="70" cy="46" r="4" fill="#ffb3c7"/>
-      <line x1="14" y1="36" x2="27" y2="38" stroke="#333" stroke-width="1.5"/>
-      <line x1="13" y1="42" x2="27" y2="42" stroke="#333" stroke-width="1.5"/>
-      <line x1="14" y1="48" x2="27" y2="46" stroke="#333" stroke-width="1.5"/>
-      <line x1="86" y1="36" x2="73" y2="38" stroke="#333" stroke-width="1.5"/>
-      <line x1="87" y1="42" x2="73" y2="42" stroke="#333" stroke-width="1.5"/>
-      <line x1="86" y1="48" x2="73" y2="46" stroke="#333" stroke-width="1.5"/>
-      <g class="bow">
-        <path d="M62 14 L76 6 L76 22 Z" fill="${dark}"/>
-        <path d="M62 14 L48 6 L48 22 Z" fill="${dark}"/>
-        <circle cx="62" cy="14" r="4" fill="${body}"/>
-      </g>
-    </g>
-  </g>
-</svg>`;
+/** A small seeded random generator, so the same character index always gets the same look. */
+function mulberry32(seed: number): () => number {
+  let s = seed | 0;
+  return () => {
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function makeLook(i: number, worst: boolean): CharacterLook {
+  const rnd = mulberry32(i * 7919 + 13);
+  const hue = (i * 47) % 360;
+  const colors = {
+    skin: skinFromSlider(rnd()),
+    hair: `hsl(${Math.floor(rnd() * 360)} 60% 40%)`,
+    bow: `hsl(${hue} 80% 50%)`,
+    outfit: `hsl(${(hue + 180) % 360} 70% 55%)`,
+  };
+  if (worst) {
+    // 46 nodes: the most any combination draws (rig 17, base 8, face_grin 5, pigtails 3, beanie 3, overalls 6, heart 2, glasses 1, freckles 1).
+    return {
+      parts: { bow: 'bow_beanie', hair: 'hair_pigtails', face: 'face_grin', outfit: 'outfit_overalls', accessory: 'acc_heart' },
+      colors,
+      options: { glasses: true, freckles: true },
+    };
+  }
+  const parts = {} as CharacterParts;
+  for (const slot of SLOTS) {
+    const choices = listParts(slot).filter((p) => p.drawn || p.isNone);
+    parts[slot] = choices[Math.floor(rnd() * choices.length)].id;
+  }
+  return { parts, colors, options: { glasses: rnd() < 0.3, freckles: rnd() < 0.3 } };
 }
 
 interface Kit {
   el: HTMLDivElement;
+  view: CharacterView;
   x: number;
   y: number;
   vx: number;
@@ -75,16 +95,28 @@ interface Kit {
 }
 
 const kits: Kit[] = [];
-let nodesPerKit = 0;
+let nodesLo = 0;
+let nodesHi = 0;
+
+function refreshNodes(): void {
+  let lo = Infinity;
+  let hi = 0;
+  for (const k of kits) {
+    const n = k.view.nodeCount();
+    lo = Math.min(lo, n);
+    hi = Math.max(hi, n);
+  }
+  nodesLo = kits.length ? lo : 0;
+  nodesHi = hi;
+}
 
 function addKit(): void {
   const i = kits.length;
+  const view = createCharacter(makeLook(i, worstOn), { width: KIT_W, clip });
   const el = document.createElement('div');
   el.className = 'kit';
-  el.innerHTML = kitSvg((i * 47) % 360);
-  el.style.setProperty('--d', `${(-Math.random() * 2).toFixed(2)}s`);
+  el.append(view.el);
   stage.appendChild(el);
-  nodesPerKit = el.querySelectorAll('*').length; // the <svg> and everything inside it
 
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -92,6 +124,7 @@ function addKit(): void {
   const range = Math.max(0, h - KIT_H - 20 - top);
   kits.push({
     el,
+    view,
     x: Math.random() * Math.max(1, w - KIT_W),
     y: 0,
     vx: (40 + Math.random() * 50) * (Math.random() < 0.5 ? -1 : 1),
@@ -104,6 +137,18 @@ function setCharCount(n: number): void {
   const target = Math.max(0, Math.min(300, Math.round(n)));
   while (kits.length < target) addKit();
   while (kits.length > target) kits.pop()?.el.remove();
+  refreshNodes();
+}
+
+function nextClip(): void {
+  clip = CLIP_NAMES[(CLIP_NAMES.indexOf(clip) + 1) % CLIP_NAMES.length];
+  for (const k of kits) k.view.play(clip);
+}
+
+function toggleLooks(): void {
+  worstOn = !worstOn;
+  kits.forEach((k, i) => k.view.update(makeLook(i, worstOn)));
+  refreshNodes();
 }
 
 function moveKits(now: number, dtMs: number): void {
@@ -218,11 +263,15 @@ function finishRun(): void {
   const worst = sorted[sorted.length - 1] ?? 0;
   const result = {
     when: new Date().toISOString(),
+    test: 'real characters (shared/character)',
     userAgent: navigator.userAgent,
     viewport: `${window.innerWidth}x${window.innerHeight}`,
     devicePixelRatio: window.devicePixelRatio,
     characters: kits.length,
-    nodesPerCharacter: nodesPerKit,
+    nodesPerCharacterMin: nodesLo,
+    nodesPerCharacterMax: nodesHi,
+    clip,
+    looks: worstOn ? 'worst' : 'random',
     particles: fxOn ? particleCount : 0,
     jsMovement: moveOn,
     seconds: runSeconds,
@@ -251,10 +300,11 @@ function renderHud(now: number): void {
   hud.style.display = 'block';
   const lines = [
     `fps ${fps.toFixed(1)}   ${window.innerWidth}x${window.innerHeight} @${window.devicePixelRatio}x`,
-    `characters ${kits.length} (${nodesPerKit} nodes each)   particles ${fxOn ? particleCount : 0}   move ${moveOn ? 'on' : 'off'}`,
+    `characters ${kits.length} (${nodesLo}-${nodesHi} nodes)   clip ${clip}   looks ${worstOn ? 'worst' : 'random'}`,
+    `particles ${fxOn ? particleCount : 0}   move ${moveOn ? 'on' : 'off'}`,
     run
       ? `RUN ${Math.floor((now - run.start) / 1000)}/${runSeconds} s`
-      : 'keys: r run  [ ] characters  - = particles  p canvas  m move  h panel',
+      : 'keys: r run  [ ] characters  - = particles  p canvas  m move  c clip  l looks  h panel',
     lastResult,
   ];
   hud.textContent = lines.join('\n');
@@ -296,6 +346,8 @@ window.addEventListener('keydown', (e) => {
     case '=': particleCount += 100; break;
     case 'p': fxOn = !fxOn; break;
     case 'm': moveOn = !moveOn; break;
+    case 'c': nextClip(); break;
+    case 'l': toggleLooks(); break;
     case 'h': hudHidden = !hudHidden; break;
   }
 });

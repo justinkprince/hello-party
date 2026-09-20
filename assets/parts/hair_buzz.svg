@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_buzz: a buzz cut. A thin cap hugging the head (its outer edge is about 2.5 units beyond the skull), a high
+     hairline, no bangs and no sideburns. 1 node. -->
+<g id="hair_back"></g>
+<g id="hair_front">
+<path class="c-hair ol" d="M17.3 44A33.5 28.5 0 1 1 82.7 44L79.5 44Q78 34 72 29Q62 25 50 25Q38 25 28 29Q22 34 20.5 44Z"/>
+</g>
+</svg>

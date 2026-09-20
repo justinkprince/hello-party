@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_spiky: five spikes standing up from the top, a jagged hairline, and small sideburns. The tallest spike
+     reaches about 7 units above the canvas (the svg has overflow visible). 1 node. -->
+<g id="hair_back"></g>
+<g id="hair_front">
+<path class="c-hair ol" d="M18 46C14 38 14 26 18 18L16 8L24 15L30 -3L40 10L50 -7L60 10L70 -3L76 15L84 8L82 18C86 26 86 38 82 46Q79 44 79 38L76 28L68 32L62 26L56 32L50 25L44 32L38 26L32 32L24 28L21 38Q21 44 18 46Z"/>
+</g>
+</svg>

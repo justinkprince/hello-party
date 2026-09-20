@@ -1,8 +1,14 @@
 // Parts gallery (Phase 1, D-42). Preview any combination of parts and colors, play the v1 clips,
 // and check the skin tones. UNVERIFIED until run.
+//
+// TV showcase (D-51): gallery.html?tv=1&look=<url-encoded JSON>&bg=<pink|white|grey|sand|dark> hides the controls and
+// shows one large character, playing idle, walk, wave, dance A, and jump in turn (3 s each, looping). The Pi has no
+// keyboard, so this is how a chosen look is shown on the TV. The gallery prints a ready-made link at the bottom.
 import {
   DEFAULT_SKIN_SLIDER,
   createCharacter,
+  SLOTS,
+  hasPart,
   listParts,
   sampleLook,
   skinFromSlider,
@@ -26,7 +32,6 @@ function el<K extends keyof HTMLElementTagNameMap>(
 }
 
 const SLOT_LABELS: [Slot, string][] = [
-  ['ears', 'Ears'],
   ['bow', 'Bow / hat'],
   ['hair', 'Hair'],
   ['face', 'Face'],
@@ -49,6 +54,10 @@ const BACKGROUNDS: [string, string][] = [
 ];
 const SKIN_STEPS = 9;
 
+if (new URLSearchParams(location.search).get('tv') === '1') startShowcase();
+else startGallery();
+
+function startGallery(): void {
 const look: CharacterLook = structuredClone(sampleLook);
 let skinT = DEFAULT_SKIN_SLIDER;
 
@@ -85,6 +94,9 @@ const preview = createCharacter(look, { width: 260 });
 const stage = el('div', { className: 'stage' }, preview.el);
 const nodes = el('div', { className: 'small' });
 const json = el('pre');
+const tvLink = el('pre');
+tvLink.style.whiteSpace = 'pre-wrap';
+tvLink.style.overflowWrap = 'anywhere';
 
 const clipButtons = new Map<ClipName, HTMLButtonElement>();
 function setActiveClip(name: ClipName): void {
@@ -220,6 +232,7 @@ app.append(
   section('Skin tones (click one to use it)', skinTiles),
   section('All parts (click one to use it)', ...partSections),
   section('This character as JSON (parts, colors, options)', json),
+  section('TV showcase link (add it after the host and port; in a shell, put the whole URL in single quotes)', tvLink),
 );
 
 function refresh(): void {
@@ -230,7 +243,62 @@ function refresh(): void {
   }
   nodes.textContent = `${preview.nodeCount()} nodes in this character (target 40 or fewer, ceiling about 50)`;
   json.textContent = JSON.stringify({ parts: look.parts, colors: look.colors, options: look.options }, null, 2);
+  tvLink.textContent =
+    'gallery.html?tv=1&look=' +
+    encodeURIComponent(JSON.stringify({ parts: look.parts, colors: look.colors, options: look.options }));
 }
 
 setActiveClip('idle');
 refresh();
+}
+
+// ---------- TV showcase (D-51) ----------
+
+function startShowcase(): void {
+  const params = new URLSearchParams(location.search);
+  const show: CharacterLook = structuredClone(sampleLook);
+  let note = '';
+  const raw = params.get('look');
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw) as Partial<CharacterLook>;
+      Object.assign(show.parts, parsed.parts ?? {});
+      Object.assign(show.colors, parsed.colors ?? {});
+      Object.assign(show.options, parsed.options ?? {});
+    } catch {
+      note = 'look= is not valid JSON, showing the sample';
+    }
+  }
+  for (const slot of SLOTS) {
+    if (!hasPart(slot, show.parts[slot])) note += ` unknown ${slot} part "${show.parts[slot]}"`;
+  }
+
+  const bgName = (params.get('bg') ?? 'pink').toLowerCase();
+  const bg = BACKGROUNDS.find(([, label]) => label.toLowerCase() === bgName)?.[0] ?? BACKGROUNDS[0][0];
+
+  document.title = 'hello-party showcase';
+  document.body.replaceChildren();
+  Object.assign(document.body.style, { margin: '0', height: '100vh', overflow: 'hidden', background: bg, cursor: 'none' });
+
+  const height = Math.round(window.innerHeight * 0.7);
+  const view = createCharacter(show, { width: Math.round((height * 100) / 140), clip: 'idle' });
+  const stage = el('div', {}, view.el);
+  stage.style.cssText = 'position:fixed;left:0;right:0;top:15vh;display:flex;justify-content:center;';
+  const label = el('div');
+  label.style.cssText =
+    'position:fixed;left:24px;bottom:20px;font:700 40px/1.2 system-ui,sans-serif;color:#222;' +
+    'background:rgba(255,255,255,0.7);padding:6px 14px;border-radius:10px;';
+  const noteEl = el('div', { textContent: note.trim() });
+  noteEl.style.cssText = 'position:fixed;right:24px;bottom:20px;font:20px system-ui,sans-serif;color:#a00;';
+  document.body.append(stage, label, noteEl);
+
+  let i = 0;
+  const next = (): void => {
+    const [name, text] = CLIP_BUTTONS[i % CLIP_BUTTONS.length];
+    i++;
+    view.play(name, { then: 'idle' });
+    label.textContent = text;
+  };
+  next();
+  setInterval(next, 3000);
+}

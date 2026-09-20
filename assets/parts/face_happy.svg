@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- face_happy: happy closed eyes (upturned arches) and a wide smile, in one stroke path, plus blush. 2 nodes. -->
+<g id="face">
+<path fill="#ff4d7d" fill-opacity="0.4" d="M25 48a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0M66.6 48a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0"/>
+<path fill="none" stroke="#1b1212" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M35 42Q39 35 43 42M57 42Q61 35 65 42M42 49Q50 58 58 49"/>
+</g>
+</svg>

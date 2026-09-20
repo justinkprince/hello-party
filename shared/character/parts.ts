@@ -13,7 +13,6 @@ type Art = Partial<Record<LayerName, string>>;
 
 /** File prefix (contracts.md section 7) to slot. */
 const PREFIX_TO_SLOT: Record<string, Slot> = {
-  ears: 'ears',
   bow: 'bow',
   hair: 'hair',
   face: 'face',
@@ -98,7 +97,10 @@ export function layerArt(look: CharacterLook): Record<LayerName, string> {
       }
       continue;
     }
-    for (const layer of SLOT_LAYERS[slot]) out[layer] = part.art[layer] ?? '';
+    for (const layer of SLOT_LAYERS[slot]) {
+      // An outfit's sleeves (arm_l, arm_r) go on top of the base arm; every other layer belongs to the part alone (D-50).
+      out[layer] = (BASE_LAYERS.includes(layer) ? out[layer] : '') + (part.art[layer] ?? '');
+    }
   }
   return out;
 }

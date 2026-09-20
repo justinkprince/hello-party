@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- acc_bowtie: a purple bow tie just below the chin (two wings and a knot). Accessories have fixed colors. 2 nodes. -->
+<g id="accessory">
+<path class="ol" fill="#7b5cff" d="M50 72L36 65L36 79ZM50 72L64 65L64 79Z"/>
+<rect class="ol" fill="#7b5cff" x="45.5" y="67.5" width="9" height="9" rx="3"/>
+</g>
+</svg>

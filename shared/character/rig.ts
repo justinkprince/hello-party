@@ -1,17 +1,16 @@
-// The shared rig (decision D-35). Every clip depends on these names, their order, and the pivots.
+// The shared rig (decision D-35; the ears layer was removed in D-47). Every clip depends on these names, their order, and the pivots.
 // Changing any of them after clips exist needs a new decision in docs/decisions.md.
 import type { Slot } from './types';
 
 export const CANVAS = { width: 100, height: 140 } as const;
 
-export const SLOTS: readonly Slot[] = ['ears', 'bow', 'hair', 'face', 'outfit', 'accessory'];
+export const SLOTS: readonly Slot[] = ['bow', 'hair', 'face', 'outfit', 'accessory'];
 
 /** Body layers, back to front, inside the root group. */
 export const BODY_LAYERS = ['leg_l', 'leg_r', 'body', 'outfit', 'accessory', 'arm_l', 'arm_r'] as const;
 
 /** Head layers, back to front, inside the head group (which is drawn after the body layers). */
 export const HEAD_LAYERS = [
-  'ears',
   'hair_back',
   'head_base',
   'face',
@@ -25,8 +24,8 @@ export type LayerName = (typeof BODY_LAYERS)[number] | (typeof HEAD_LAYERS)[numb
 
 export const ALL_LAYERS: readonly LayerName[] = [...BODY_LAYERS, ...HEAD_LAYERS];
 
-/** Nodes in the rig itself: the <svg>, root, 7 body layers, head, and 8 head layers (D-35). */
-export const RIG_NODE_COUNT = 18;
+/** Nodes in the rig itself: the <svg>, root, 7 body layers, head, and 7 head layers (D-35, D-47). */
+export const RIG_NODE_COUNT = 17;
 
 /** Layers drawn by assets/parts/base.svg. freckles and glasses are shown only when the option is on. */
 export const BASE_LAYERS: readonly LayerName[] = [
@@ -40,13 +39,13 @@ export const BASE_LAYERS: readonly LayerName[] = [
   'glasses',
 ];
 
-/** Which layers each part slot fills. One `hair` part supplies both hair layers (D-35). */
+/** Which layers each part slot fills. One `hair` part supplies both hair layers (D-35). An `outfit` part may also
+ *  supply arm_l and arm_r (sleeves): those are drawn on top of the base arm, so they turn with it (D-50). */
 export const SLOT_LAYERS: Record<Slot, readonly LayerName[]> = {
-  ears: ['ears'],
   bow: ['bow'],
   hair: ['hair_back', 'hair_front'],
   face: ['face'],
-  outfit: ['outfit'],
+  outfit: ['outfit', 'arm_l', 'arm_r'],
   accessory: ['accessory'],
 };
 

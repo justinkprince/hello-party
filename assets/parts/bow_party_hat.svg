@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- bow_party_hat: a cone hat on top of the head in --bow, with a fixed white stripe and a fixed white pom-pom.
+     The tip is about 15 units above the canvas (the svg has overflow visible). 3 nodes. -->
+<g id="bow">
+<path class="c-bow ol" d="M34 22Q50 26 66 22L50 -14Z"/>
+<path fill="#ffffff" d="M41.1 6L58.9 6L61.6 12L38.4 12Z"/>
+<circle class="ol" fill="#ffffff" cx="50" cy="-14" r="5"/>
+</g>
+</svg>

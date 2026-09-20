@@ -159,12 +159,14 @@ All ids are strings with a short prefix. Times are milliseconds since the epoch 
 
 ```json
 { "id": "c_8f3a", "ownerId": "g_21b7", "name": "Emma",
-  "parts": { "ears": "ears_pointy", "bow": "bow_big", "hair": "hair_pigtails",
-             "face": "face_dots", "outfit": "outfit_overalls", "accessory": "acc_scarf" },
+  "parts": { "bow": "bow_big", "hair": "hair_pigtails", "face": "face_smile",
+             "outfit": "outfit_overalls", "accessory": "acc_scarf" },
   "colors": { "skin": "#f6d7b8", "hair": "#5a3a22", "bow": "#e60012", "outfit": "#4a90d9" },
   "options": { "glasses": true, "freckles": false },
   "personality": "bouncy", "onStage": true, "nameHidden": false, "createdAt": 1790000000000 }
 ```
+`parts` has exactly five keys: `bow`, `hair`, `face`, `outfit`, `accessory`. There is no ears slot (D-47). Each value is a part id from D-44 (`<slot>_<name>`, the file name in `assets/parts/` without `.svg`). `bow_none` and `acc_none` mean nothing is worn; hair, face, and outfit have no none. The server rejects other keys and unknown ids.
+
 `options` is `APPROVED` (attribute options from C-1): independent on/off toggles for overlay layers that fit every face part. The known keys are `glasses` and `freckles`, and the server rejects any other key. Glasses are not an accessory part, so a character can wear glasses and an accessory together. Personality is assigned at random at creation (D-5).
 
 ### 5.2 Profile and device `APPROVED`
@@ -369,7 +371,7 @@ assets/
   audio/sfx/<actionId>.mp3         action sounds (also card and effect sounds)
   audio/broadcast/<name>.mp3       broadcast sounds, preloaded on phones
   icons/<name>.svg                 action and card icons
-  parts/<slot>_<name>.svg          character parts (ears_, bow_, hair_, face_, outfit_, acc_)
+  parts/<slot>_<name>.svg          character parts (bow_, hair_, face_, outfit_, acc_; base.svg is the body)
   scenes/<sceneId>_bg.svg          scene backgrounds
 config/                            defaults (settings, scene configs, action registry)
 data/                              runtime data, gitignored

@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- bow_crown: a three-point crown on top of the head. The body is --bow (so it can be gold, pink, and so on) and the
+     three jewels are a fixed teal. 2 nodes. -->
+<g id="bow">
+<path class="c-bow ol" d="M32 22L30 4L41 13L50 1L59 13L70 4L68 22Q50 26 32 22Z"/>
+<path fill="#3ec1d3" d="M38 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M48 20.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M58 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+</g>
+</svg>

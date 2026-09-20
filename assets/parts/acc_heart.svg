@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- acc_heart: a heart necklace: a thin dark chain around the neck and a fixed pink heart pendant. Accessories have
+     fixed colors. 2 nodes. -->
+<g id="accessory">
+<path fill="none" stroke="#3a2a2a" stroke-width="1.6" stroke-linecap="round" d="M33 63Q50 84 67 63"/>
+<path fill="#ff4d7d" stroke="#3a2a2a" stroke-width="1.8" stroke-linejoin="round" d="M50 88C42 82 42 75 46.5 75C48.5 75 50 76.5 50 78C50 76.5 51.5 75 53.5 75C58 75 58 82 50 88Z"/>
+</g>
+</svg>

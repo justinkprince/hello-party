@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_side_part: a neat cut with a side part. The hair sweeps down over the right side of the forehead and is short
+     on the left, with a thin part line in a fixed dark color. 2 nodes. -->
+<g id="hair_back"></g>
+<g id="hair_front">
+<path class="c-hair ol" d="M18 50C13 32 17 12 34 7Q50 3 66 7C83 12 87 32 82 50Q79 46 79 38Q78 32 70 30Q58 30 46 23Q38 22 30 28Q23 31 21 38Q22 46 18 50Z"/>
+<path fill="none" stroke="#3a2a2a" stroke-width="1.6" stroke-linecap="round" d="M46 23Q43 15 44 8"/>
+</g>
+</svg>

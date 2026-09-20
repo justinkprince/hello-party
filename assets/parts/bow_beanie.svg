@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- bow_beanie: a knitted cap pulled over the top of the head, in --bow, with a cuff band and a fixed white pom-pom.
+     It covers the fringe; side hair still shows below the cuff. 3 nodes. -->
+<g id="bow">
+<path class="c-bow ol" d="M21 22C19 6 33 -3 50 -3C67 -3 81 6 79 22Z"/>
+<path class="c-bow ol" d="M20 20Q50 26 80 20L81 29Q50 35 19 29Z"/>
+<circle class="ol" fill="#ffffff" cx="50" cy="-4" r="6"/>
+</g>
+</svg>

@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- bow_small: a small bow at the upper right of the head, in --bow. 2 nodes. -->
+<g id="bow">
+<path class="c-bow ol" d="M68 20L58 14Q56 20 58 26ZM68 20L78 14Q80 20 78 26Z"/>
+<circle class="c-bow ol" cx="68" cy="20" r="3.2"/>
+</g>
+</svg>

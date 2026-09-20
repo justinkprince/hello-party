@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_ponytail: the ponytail swings out from the upper right behind the head. In front, a side-swept cap and a fixed
+     white tie (D-49) where the ponytail leaves the head. 3 nodes. -->
+<g id="hair_back">
+<path class="c-hair ol" d="M72 16C88 8 100 22 98 42C97 56 92 66 86 68C88 56 86 44 80 36C76 30 72 24 72 16Z"/>
+</g>
+<g id="hair_front">
+<path class="c-hair ol" d="M18 50C13 32 17 12 34 7Q50 3 66 7C83 12 87 32 82 50Q78 46 79 38Q76 27 64 26Q52 27 44 34Q36 29 28 30Q22 32 21 38Q22 46 18 50Z"/>
+<path class="ol" fill="#ffffff" d="M76 19a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+</g>
+</svg>

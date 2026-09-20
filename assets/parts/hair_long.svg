@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><!-- stub: not drawn yet (D-45) --></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140">
+<!-- hair_long: hair_back is what hangs behind the head: two shoulder-length side locks and the hair behind the neck.
+     It starts under the front sideburns (no step in the outline) and ends around the top of the arms, with no dome, so
+     the fringe is the only top outline. hair_front is straight bangs with strands hugging the face. 2 nodes. -->
+<g id="hair_back">
+<path class="c-hair ol" d="M18.5 50C15 58 14 66 16 76Q22 82 29 74L29 62L71 62L71 74Q78 82 84 76C86 66 85 58 81.5 50Z"/>
+</g>
+<g id="hair_front">
+<path class="c-hair ol" d="M19 54C16 38 19 18 33 11Q50 5 67 11C81 18 84 38 81 54Q75 50 76 40Q76 31 68 30L32 30Q24 31 24 40Q25 50 19 54Z"/>
+</g>
+</svg>
