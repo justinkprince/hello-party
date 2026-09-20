@@ -1,8 +1,8 @@
 # PROGRESS
 
-Last updated: 2026-09-18 by the Phase 0 agent (Claude, no shell)
-Current phase: Phase 0, in progress (scaffold only; gate not met).
-Schedule: on track. Nothing cut.
+Last updated: 2026-09-20 by the Phase 0 agent (Claude, file access only; Justin ran the commands)
+Current phase: Phase 0, in progress (gate not yet met).
+Schedule: BEHIND by about 2 days. On Sun 9/20 Phase 0 is still not tagged; Phase 1 was planned for Sat 9/19 and Phase 2 for Sun 9/20. Nothing cut yet; Justin decides (see Needs Justin).
 
 ## Phase status
 | Phase | Planned | Status | Branch | Tag | Gate result |
@@ -22,6 +22,7 @@ Schedule: on track. Nothing cut.
 - **Blocked:** everything that needs a shell or the Pi (see Needs Justin). This session had file access only. The `docs-pack-done` tag exists (checked in `.git/refs/tags`).
 
 ## Needs Justin
+- [ ] Decide how to handle the 2-day slip (see the timeline slip rules and cut list). Tell the agent how many hours you have each day until Fri 9/25 midday (feature freeze). (Sun 9/20)
 - [ ] Phase 0 remainder needs a session with a shell and Pi access (SSH or keyboard), the TV on, and approval of the static IP. (Fri 9/18)
 - [x] Stack approved (D-28): Node LTS, TypeScript, `ws`, Vite, React for guest and admin, DOM SVG (one `<svg>` per character) with effects on a canvas overlay (O-7)
 - [ ] Run the git setup commands from the hand-off report (init, snapshot, two docs commits, tag `docs-pack-done`, archive commit). Then delete the old root `timeline.md` if it is still there. (Fri 9/18)
@@ -37,7 +38,7 @@ Schedule: on track. Nothing cut.
 - [ ] Optional: create a private remote repo for backup (by Fri 9/25)
 
 ## Known issues
-(none)
+- Soundbar path untested (target TV not available). Fallback: the TV's own speakers (D-32). Test on the target TV when Justin has access.
 
 ## Session log
 Newest first. At most 5 lines per entry.

@@ -24,7 +24,7 @@
 - Vite for the three web apps: React for the guest and admin apps, plain TypeScript for the display. Keep the WebSocket connection and app state in a small store outside the React components, so re-renders never open a second connection.
 - Characters as DOM SVG with CSS transforms, one `<svg>` per character inside a positioned wrapper. Effects (confetti, fireworks, stars) go on one canvas overlay unless the Phase 0 spike shows DOM effects are fine. If the spike stutters, fall back to canvas or PixiJS for characters.
 - Characters and guests stored as JSON files on disk.
-- Pad service reads MIDI on the Pi: Python `mido` with `python-rtmidi`, or Node `easymidi`, whichever installs cleanly (decide in Phase 0).
+- Pad service reads MIDI on the Pi with Node `easymidi` (decision D-33; `mido` with `python-rtmidi` failed to install on the Pi and stays only as a fallback).
 - systemd services on the Pi; a Chromium kiosk for the TV.
 
 ## Repo layout (planned; Phase 0 creates the folders)
